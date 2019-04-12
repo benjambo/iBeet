@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">iBeet</string>
+    <string name="hello_ibeet">Hello iBeet!</string>
 </resources>
