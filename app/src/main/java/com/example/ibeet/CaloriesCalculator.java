@@ -1,62 +1,6 @@
-package com.example.ibeet;
-
-import java.util.ArrayList;
-
-class CaloriesCalculator {
-    private static final CaloriesCalculator ourInstance = new CaloriesCalculator();
-
-    private ArrayList<CalorieNeed> calorieNeeds;
-    private double plateWeight, vegetablePercentage, meatToCarbsPercentage;
-    private double calories, carbGrams, fatGrams, proteinGrams;
-
-    static CaloriesCalculator getInstance() {
-        return ourInstance;
-    }
-
-    private CaloriesCalculator() {
-        FoodListGenerator foodListGenerator = new FoodListGenerator();
-        calorieNeeds = foodListGenerator.getList();
-
-    }
-
-    /**
-     * Purge the old and set new plate values
-     * @param newWeight plate weight
-     * @param vegetablePercentage percentage of vegatble to the plate
-     * @param meatPercentage percentage of meat from rest of plate
-     */
-    public void setNewPlate(double newWeight, double vegetablePercentage, double meatPercentage) {
-        calories = carbGrams = fatGrams = proteinGrams = 0;
-        this.plateWeight = newWeight;
-        this.vegetablePercentage = vegetablePercentage;
-        this.meatToCarbsPercentage = meatPercentage;
-    }
-
-    /**
-     * Calculate Calories and carbs, protein and fat in grams.
-      * @return String
-     */
-    public String calculatePlate() {
-        double vegeWeight = plateWeight * vegetablePercentage;
-        double meatWeight = (plateWeight - vegeWeight) * meatToCarbsPercentage;
-        double carbWeight = (plateWeight - vegeWeight) - meatWeight;
-
-        calories = ((0.2 * vegeWeight) + (4 * meatWeight) + (4 * carbWeight));
-        carbGrams = ((0.2 * 0.6 * vegeWeight) + (0.3 * carbWeight));
-        proteinGrams = ((0.2 * 0.3 * vegeWeight) + (0.25 * 0.9 * meatWeight));
-        fatGrams = ((0.25 * 0.1 * meatWeight) + (0.05 * carbWeight));
-
-        /**
-         * This is still in debugging mode
-         */
-        return "Calories: " + calories + " || carbs: " + carbGrams + " || protein: " + proteinGrams +
-                " || fat: " + fatGrams;
-    }
-
-
-}
-
 /***************************************************************************************************
+ *
+ *                      CaloriesCalculator
  *
  *  This calculator is based on dietary programs from verywellfit.com and dietary guidelines by age
  *  from heath.gov. The calculator also applies knowledge of food properties from juxtable.com,
@@ -72,7 +16,7 @@ class CaloriesCalculator {
  *  http://apjcn.nhri.org.tw/server/info/books-phds/books/foodfacts/html/data/data1b.html
  *  http://www.nutritionsheet.com/facts/restaurants
  *
-***************************************************************************************************/
+ ***************************************************************************************************/
 /**************************************************************************************************'
  *
  *                          dietaryPrograms
@@ -108,3 +52,59 @@ class CaloriesCalculator {
  *  Calculator will store results for last 7 days for daily and weekly reviews
  *
  **************************************************************************************************/
+
+package com.example.ibeet;
+
+import java.util.ArrayList;
+
+class CaloriesCalculator {
+    private static final CaloriesCalculator ourInstance = new CaloriesCalculator();
+
+    private ArrayList<CalorieNeed> calorieNeeds;
+    private double plateWeight, vegetablePercentage, meatToCarbsPercentage;
+    private double calories, carbGrams, fatGrams, proteinGrams;
+
+    static CaloriesCalculator getInstance() {
+        return ourInstance;
+    }
+
+    private CaloriesCalculator() {
+        FoodListGenerator foodListGenerator = new FoodListGenerator();
+        calorieNeeds = foodListGenerator.getList();
+
+    }
+
+    /**
+     * Purge the old and set new plate values
+     * @param newWeight plate weight
+     * @param vegetablePercentage percentage of vegetable to the plate
+     * @param meatPercentage percentage of meat from rest of plate
+     */
+    public void setNewPlate(double newWeight, double vegetablePercentage, double meatPercentage) {
+        calories = carbGrams = fatGrams = proteinGrams = 0;
+        this.plateWeight = newWeight;
+        this.vegetablePercentage = vegetablePercentage;
+        this.meatToCarbsPercentage = meatPercentage;
+    }
+
+    /**
+     * Calculate Calories and carbs, protein and fat in grams.
+      * @return String
+     */
+    public String calculatePlate() {
+        double vegeWeight = plateWeight * vegetablePercentage;
+        double meatWeight = (plateWeight - vegeWeight) * meatToCarbsPercentage;
+        double carbWeight = (plateWeight - vegeWeight) - meatWeight;
+
+        calories = ((0.2 * vegeWeight) + (4 * meatWeight) + (4 * carbWeight));
+        carbGrams = ((0.2 * 0.6 * vegeWeight) + (0.3 * carbWeight));
+        proteinGrams = ((0.2 * 0.3 * vegeWeight) + (0.25 * 0.9 * meatWeight));
+        fatGrams = ((0.25 * 0.1 * meatWeight) + (0.05 * carbWeight));
+
+        /**
+         * This is still in debugging mode
+         */
+        return "Calories: " + calories + " || carbs: " + carbGrams + " || protein: " + proteinGrams +
+                " || fat: " + fatGrams;
+    }
+}

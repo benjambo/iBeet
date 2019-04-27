@@ -1,3 +1,21 @@
+/**************************************************************************************************
+ *
+ *                  FoodActivity
+ *
+ *  User Inputs:
+ *          PlateWeigh (50 - 1000)
+ *          Percentage of Vegetables to rest of plate (0 - 100)
+ *          Percentage of meat to rest of the plate (0 - 100)
+ *          Calculate button -> CaloriesCalculator.class
+ *
+ *  Receives:
+ *          Calories his day : int
+ *          Calories this week : int
+ *          daily nutrition comparison (calories, carbs, protein, fats : int, int, int, int)
+ *          weekly nutritiom comparison (calories, carbs, protein, fats : int, int, int, int)
+ *
+ **************************************************************************************************/
+
 package com.example.ibeet;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,8 +55,9 @@ public class FoodActivity extends AppCompatActivity {
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(FoodActivity.this, "Weight set to: " + weight+
-                                "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FoodActivity.this, "Weight set to: " +
+                        (1000 * (weight/100) + 50) +
+                                " grams", Toast.LENGTH_SHORT).show();
             }
         });
 
