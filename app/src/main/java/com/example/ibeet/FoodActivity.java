@@ -24,7 +24,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 
 public class FoodActivity extends AppCompatActivity {
@@ -32,6 +35,7 @@ public class FoodActivity extends AppCompatActivity {
     private double weight, vegetablePercentage, meatPercentage;
     private SeekBar sbWeight, sbVege, sbMeat;
     private Button calculate;
+    private TextView dayTxtV, weekTxtV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class FoodActivity extends AppCompatActivity {
         sbVege = findViewById(R.id.sbVege);
         sbMeat = findViewById(R.id.sbMeat);
         calculate = findViewById(R.id.calculatePlateBtn);
+        dayTxtV = findViewById(R.id.dayBreakdownTxt);
+        weekTxtV = findViewById(R.id.weekBreakdownTxt);
 
         sbWeight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -108,5 +114,21 @@ public class FoodActivity extends AppCompatActivity {
                         CaloriesCalculator.getInstance().calculatePlate(), Toast.LENGTH_LONG).show();
             }
         });
+
+        /* this is currently broken
+
+        StringBuilder dayText = new StringBuilder();
+        StringBuilder weekText = new StringBuilder();
+        for(int i=0; i<4; i++){
+            dayText.append(String.format(Locale.getDefault() ,"%.1f",
+                    CaloriesCalculator.getInstance().getDaysResults()[i]) +
+                    " || ");
+            weekText.append(String.format(Locale.getDefault(), "%.1f",
+                    CaloriesCalculator.getInstance().getWeeksAverageResults()[i]) +
+                    " || ");
+        }
+        dayTxtV.setText(("Calories || Carbs ||Protein ||Fats \n" + dayText));
+        weekTxtV.setText(("Calories || Carbs ||Protein ||Fats \n" + weekText));
+        */
     }
 }

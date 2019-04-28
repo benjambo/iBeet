@@ -55,14 +55,28 @@
 
 package com.example.ibeet;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 class CaloriesCalculator {
     private static final CaloriesCalculator ourInstance = new CaloriesCalculator();
 
     private ArrayList<CalorieNeed> calorieNeeds;
+    private ArrayList<double[]> nutritionalCollection;
+
     private double plateWeight, vegetablePercentage, meatToCarbsPercentage;
     private double calories, carbGrams, fatGrams, proteinGrams;
+    private int currentDay = 0;
+
+    private Context pref;
+    private SharedPreferences preferences_dates;
 
     static CaloriesCalculator getInstance() {
         return ourInstance;
@@ -71,7 +85,7 @@ class CaloriesCalculator {
     private CaloriesCalculator() {
         FoodListGenerator foodListGenerator = new FoodListGenerator();
         calorieNeeds = foodListGenerator.getList();
-
+        nutritionalCollection = new ArrayList<>();
     }
 
     /**
@@ -106,5 +120,75 @@ class CaloriesCalculator {
          */
         return "Calories: " + calories + " || carbs: " + carbGrams + " || protein: " + proteinGrams +
                 " || fat: " + fatGrams;
+    }
+
+
+    /**
+     * Update a nutritional breakdown into apps storage. The method indexes data by day
+     * @param calories : double
+     * @param carbGrams : double
+     * @param proteinGrams : double
+     * @param fatGrams : double
+     */
+    public void update(double calories, double carbGrams, double proteinGrams, double fatGrams){
+
+        double[] newCollection = {calories, carbGrams, proteinGrams, fatGrams};
+
+        preferences_dates = pref.getSharedPreferences("DATES", Activity.MODE_PRIVATE);
+
+        //Get the time-difference between first launch and time now.
+        long daysInMillis = 1000 * 60 * 60 * 24;    // = 24 hours in milliseconds
+        long daysDifferenceInMillis = (preferences_dates.getLong("CURRENT_DATE", 0) -
+                            preferences_dates.getLong("FIRST_DATE",0));
+
+        //following calculation should produce even number but one can never be too certain
+        int days = Math.toIntExact((daysDifferenceInMillis - (daysDifferenceInMillis % daysInMillis))
+                / daysInMillis);
+
+        //we will only store 7 days worth of usage history, so:
+        int weekDayRotationIndex = days % 7;
+
+        //make sure we stack current days info, not overwrite it
+        //when week passes, previous weekdays get overwritten.
+        if(weekDayRotationIndex == currentDay){
+            for(int i=0; i<4; i++){
+                double newValue = newCollection[i] +
+                        nutritionalCollection.get(weekDayRotationIndex)[i];
+                newCollection[i] = newValue;
+            }
+            nutritionalCollection.set(weekDayRotationIndex, newCollection);
+        } else if(weekDayRotationIndex>currentDay){
+            nutritionalCollection.set(weekDayRotationIndex, newCollection);
+            currentDay = weekDayRotationIndex;
+        } else {
+            Log.d("CALORIES_CALCULATOR.UPDATE", "ERRRO SETTING NUTRITIONAL_COLLECTION");
+        }
+    }
+
+    /**
+     *  Get days results: double calories, double carbGrams, double proteinGrams, double fatGrams
+     * @return double[] nutritionalCollection(currentDay)
+     */
+    public double[] getDaysResults(){
+        return nutritionalCollection.get(currentDay);
+    }
+
+    /**
+     * Get average results of last seven days, including current one:
+     *  double calories, double carbGrams, double proteinGrams, double fatGrams
+     * @return double[] averageCollection
+     */
+    public double[] getWeeksAverageResults(){
+        double averageValue = 0;
+        double[] averageCollection = new double[4];
+
+        for(int i = 0; i<4; i++){
+            for(int j = 0; j<7; j++){
+                averageValue += nutritionalCollection.get(j)[i];
+            }
+            averageValue /= 7;
+            averageCollection[i] = averageValue;
+        }
+        return averageCollection;
     }
 }

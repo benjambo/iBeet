@@ -19,10 +19,10 @@ import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences preferences_dates;
-    SharedPreferences.Editor editor_date;
-    Date date; TimeZone tz;
-    Button food;
+    private SharedPreferences preferences_dates;
+    private SharedPreferences.Editor editor_date;
+    private Date date; private TimeZone tz;
+    private Button food;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         updateDate();   //Updating current date is important
 
+
+        //Placeholder means for moving to foodpage
         food = findViewById(R.id.foodBtn);
         food.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             long hoursInMilli = 1000 * 60 * 60;
             long daysInMilli = hoursInMilli * 24;
 
-            //our first date begins the last time clock was 00:-- in devices current timezone,
+            //our first date begins the last time clock was 00:00 in devices current timezone,
             //so we have to find out the difference of current time and last 00:--.
             long difference = ((date.getTime() + tz.getOffset(date.getTime())) % daysInMilli);
 
