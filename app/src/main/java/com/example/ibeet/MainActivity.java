@@ -3,6 +3,7 @@ package com.example.ibeet;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         updateDate();   //Updating current date is important
 
-
         //Placeholder means for moving to foodpage
         food = findViewById(R.id.foodBtn);
         food.setOnClickListener(new View.OnClickListener() {
@@ -50,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Every time main activity is created, the date is updated. Either current date is overwritten
-     * in the SharedPreferences or the first date is set on the morning of the first use of the
-     * application.
+     * in the SharedPreferences or the first date is set on the morning ( 00:00) of the first use of
+     * the application.
      *
      * Useful
      * https://stackoverflow.com/questions/21285161/android-difference-between-two-dates
      */
     private void updateDate(){
-        preferences_dates = getSharedPreferences("DATES", Activity.MODE_PRIVATE);
+        preferences_dates = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
         editor_date = preferences_dates.edit();
         date = new Date(); tz = TimeZone.getDefault();
 
@@ -74,14 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
             long firstDate = (date.getTime() - difference);
             editor_date.putLong("FIRST_DATE", firstDate);
+            editor_date.putLong("CURRENT_DATE", firstDate);
         }
         editor_date.apply();
 
-        /* //DEBUGGING
+         /*//DEBUGGING
         String first_date = new SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).format(
-                new Date(preferences_dates.getLong("CURRENT_DATE", 0)));
+                new Date(preferences_dates.getLong("FIRST_DATE", 0)));
         Toast.makeText(MainActivity.this, "TIME: " + first_date,
                 Toast.LENGTH_LONG).show();
-        */
+        //*/
     }
 }

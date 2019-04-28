@@ -39,7 +39,7 @@
  **************************************************************************************************/
 /***************************************************************************************************
  *
- *                      Calculator
+ *                      CaloriesCalculator
  *
  *  Input from user is meal in amounts (grams and division of plate, or preset)
  *  Input from preferences (Age, activity, preferred diet)
@@ -86,7 +86,13 @@ class CaloriesCalculator {
         FoodListGenerator foodListGenerator = new FoodListGenerator();
         calorieNeeds = foodListGenerator.getList();
         nutritionalCollection = new ArrayList<>();
+        nutritionalCollection.add(new double[]{0,0,0,0});
     }
+
+
+    public void setContext(Context context){
+        pref = context;
+    } //
 
     /**
      * Purge the old and set new plate values
@@ -115,6 +121,7 @@ class CaloriesCalculator {
         proteinGrams = ((0.2 * 0.3 * vegeWeight) + (0.25 * 0.9 * meatWeight));
         fatGrams = ((0.25 * 0.1 * meatWeight) + (0.05 * carbWeight));
 
+        update(calories, carbGrams, proteinGrams, fatGrams);
         /**
          * This is still in debugging mode
          */
@@ -124,7 +131,7 @@ class CaloriesCalculator {
 
 
     /**
-     * Update a nutritional breakdown into apps storage. The method indexes data by day
+     * Update a nutritional breakdown into app's storage. The method indexes data by day
      * @param calories : double
      * @param carbGrams : double
      * @param proteinGrams : double
@@ -134,11 +141,11 @@ class CaloriesCalculator {
 
         double[] newCollection = {calories, carbGrams, proteinGrams, fatGrams};
 
-        preferences_dates = pref.getSharedPreferences("DATES", Activity.MODE_PRIVATE);
+        preferences_dates = pref.getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
 
         //Get the time-difference between first launch and time now.
         long daysInMillis = 1000 * 60 * 60 * 24;    // = 24 hours in milliseconds
-        long daysDifferenceInMillis = (preferences_dates.getLong("CURRENT_DATE", 0) -
+         long daysDifferenceInMillis = (preferences_dates.getLong("CURRENT_DATE", 0) -
                             preferences_dates.getLong("FIRST_DATE",0));
 
         //following calculation should produce even number but one can never be too certain
@@ -146,10 +153,16 @@ class CaloriesCalculator {
                 / daysInMillis);
 
         //we will only store 7 days worth of usage history, so:
-        int weekDayRotationIndex = days % 7;
+        int weekDayRotationIndex;
+        if(days != 0) {
+            weekDayRotationIndex = days % 7;
+        } else {
+            weekDayRotationIndex = 0;
+        }
 
         //make sure we stack current days info, not overwrite it
         //when week passes, previous weekdays get overwritten.
+
         if(weekDayRotationIndex == currentDay){
             for(int i=0; i<4; i++){
                 double newValue = newCollection[i] +
@@ -179,6 +192,10 @@ class CaloriesCalculator {
      * @return double[] averageCollection
      */
     public double[] getWeeksAverageResults(){
+        //Funkion cannot resolve average for last seven days if there havent been seven days
+        if(nutritionalCollection.size()!=7){
+            return null;
+        }
         double averageValue = 0;
         double[] averageCollection = new double[4];
 

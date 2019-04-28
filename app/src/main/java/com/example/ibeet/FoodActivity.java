@@ -9,8 +9,8 @@
  *          Calculate button -> CaloriesCalculator.class
  *
  *  Receives:
- *          Calories his day : int
- *          Calories this week : int
+ *          Nutritional values this day : int
+ *          Nutritional values this week : int
  *          daily nutrition comparison (calories, carbs, protein, fats : int, int, int, int)
  *          weekly nutritiom comparison (calories, carbs, protein, fats : int, int, int, int)
  *
@@ -20,6 +20,7 @@ package com.example.ibeet;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.StringWriter;
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 
@@ -34,7 +37,7 @@ public class FoodActivity extends AppCompatActivity {
 
     private double weight, vegetablePercentage, meatPercentage;
     private SeekBar sbWeight, sbVege, sbMeat;
-    private Button calculate;
+    private Button btnCalculate;
     private TextView dayTxtV, weekTxtV;
 
     @Override
@@ -46,9 +49,17 @@ public class FoodActivity extends AppCompatActivity {
         sbWeight = findViewById(R.id.sbWeight);
         sbVege = findViewById(R.id.sbVege);
         sbMeat = findViewById(R.id.sbMeat);
-        calculate = findViewById(R.id.calculatePlateBtn);
+        btnCalculate = findViewById(R.id.calculatePlateBtn);
+
+        //textviews
         dayTxtV = findViewById(R.id.dayBreakdownTxt);
         weekTxtV = findViewById(R.id.weekBreakdownTxt);
+
+        //initialize textfields
+        setText();
+
+        //Give singleton context, so it can access sharedPreferences
+        CaloriesCalculator.getInstance().setContext(this);
 
         sbWeight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -99,12 +110,13 @@ public class FoodActivity extends AppCompatActivity {
             }
         });
 
-        calculate.setOnClickListener(new View.OnClickListener() {
+        btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double finalWeight = (1000 * (weight/100) + 50);
                 double vgPercentage = (vegetablePercentage / 100);
                 double mtcPercentage = (meatPercentage / 100);
+                setText();
 
                 /**
                  * This is still in debugging mode
@@ -114,21 +126,25 @@ public class FoodActivity extends AppCompatActivity {
                         CaloriesCalculator.getInstance().calculatePlate(), Toast.LENGTH_LONG).show();
             }
         });
+    }
 
-        /* this is currently broken
+    /**
+     * Update statistics in FoodActivity
+     */
+    private void setText(){
 
-        StringBuilder dayText = new StringBuilder();
-        StringBuilder weekText = new StringBuilder();
-        for(int i=0; i<4; i++){
-            dayText.append(String.format(Locale.getDefault() ,"%.1f",
-                    CaloriesCalculator.getInstance().getDaysResults()[i]) +
-                    " || ");
-            weekText.append(String.format(Locale.getDefault(), "%.1f",
-                    CaloriesCalculator.getInstance().getWeeksAverageResults()[i]) +
-                    " || ");
+        DecimalFormat df = new DecimalFormat("#.#");
+        if(CaloriesCalculator.getInstance().getDaysResults() != null){
+            double[] dayStats = CaloriesCalculator.getInstance().getDaysResults();
+            dayTxtV.setText(("Calories || Carbs ||Protein ||Fats \n" + df.format(dayStats[0]) +
+                    df.format(dayStats[1]) + df.format(dayStats[2]) + df.format(dayStats[3])));
         }
-        dayTxtV.setText(("Calories || Carbs ||Protein ||Fats \n" + dayText));
-        weekTxtV.setText(("Calories || Carbs ||Protein ||Fats \n" + weekText));
-        */
+        ///*
+        if(CaloriesCalculator.getInstance().getWeeksAverageResults() != null){
+            double[] weekStats = CaloriesCalculator.getInstance().getWeeksAverageResults();
+            weekTxtV.setText(("Calories || Carbs ||Protein ||Fats \n" + df.format(weekStats[0]) +
+                    df.format(weekStats[1]) + df.format(weekStats[2]) + df.format(weekStats[3])));
+        } //
+
     }
 }
