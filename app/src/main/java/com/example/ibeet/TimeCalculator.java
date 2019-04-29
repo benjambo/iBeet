@@ -36,7 +36,8 @@ class TimeCalculator {
         editor_date = preferences_dates.edit();
         date = new Date(); tz = TimeZone.getDefault();
 
-        //Check if FIRST_DATE is set, if not set it.
+        //if FIRST_DATE is set, if not set it.
+        //else set CURRENT_DATE.
         if(preferences_dates.contains("FIRST_DATE")){
             editor_date.putLong("CURRENT_DATE", (date.getTime() /*+ tz.getOffset(date.getTime())*/));
 
@@ -47,21 +48,33 @@ class TimeCalculator {
             //our first date begins the last time clock was 00:00 in devices current timezone,
             //so we have to find out the difference of current time and last 00:--.
             long difference = ((date.getTime() + tz.getOffset(date.getTime())) % daysInMilli);
-
             long firstDate = (date.getTime() - difference);
             editor_date.putLong("FIRST_DATE", firstDate);
             editor_date.putLong("CURRENT_DATE", firstDate);
         }
         editor_date.apply();
 
-         /*//DEBUGGING
-        String first_date = new SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).format(
-                new Date(preferences_dates.getLong("FIRST_DATE", 0)));
-        Toast.makeText(MainActivity.this, "TIME: " + first_date,
-                Toast.LENGTH_LONG).show();
-        //*/
     }
 
+    /**
+     * get rotation index. Rotation length is 7
+     * @return rotationIndex : int
+     */
+    public int getDayRotation(){
+        int days = getTimeDiffInDays();
+        int rotationIndex;
+        if(days != 0) {
+            rotationIndex = days % 7;
+        } else {
+            rotationIndex = 0;
+        }
+        return rotationIndex;
+    }
+
+    /**
+     * Get time difference in days, of first set date and current date.
+     * @return days : int
+     */
     public int getTimeDiffInDays(){
 
         //Get the time-difference between first launch and time now.
