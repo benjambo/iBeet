@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">iBeet</string>
     <string name="hello_ibeet">Hello iBeet!</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="ibeet">iBeet</string>
+    <string name="off_to_a_better_start">Off to a better start</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email_address">Email address</string>
+    <string name="iconimage">iconImage</string>
 </resources>

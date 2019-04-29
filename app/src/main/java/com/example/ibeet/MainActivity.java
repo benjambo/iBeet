@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor_date;
     private Date date; private TimeZone tz;
     private Button food;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent foodActivity = new Intent(MainActivity.this, FoodActivity.class);
                 startActivity(foodActivity);
+            }
+        });
+
+        login = findViewById(R.id.loginBtn);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginActivity);
             }
         });
     }
