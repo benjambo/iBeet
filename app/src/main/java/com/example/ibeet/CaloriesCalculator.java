@@ -124,7 +124,7 @@ class CaloriesCalculator {
 
 
     /**
-     * Update a nutritional breakdown into app's storage. The method indexes data by day
+     * Update a nutritional breakdown into app's storage. The method stacks and indexes data by day.
      * @param calories : double
      * @param carbGrams : double
      * @param proteinGrams : double
@@ -134,29 +134,22 @@ class CaloriesCalculator {
 
         double[] newCollection = {calories, carbGrams, proteinGrams, fatGrams};
 
-        int days = TimeCalculator.getInstance().getTimeDiffInDays();
-        int weekDayRotationIndex;
-        if(days != 0) {
-            weekDayRotationIndex = days % 7;
-        } else {
-            weekDayRotationIndex = 0;
-        }
+        int rotationIndex = TimeCalculator.getInstance().getDayRotation();
 
         //make sure we stack current days info, not overwrite it
         //when week passes, previous weekdays get overwritten.
-
-        if(weekDayRotationIndex == currentDay){
+        if(rotationIndex == currentDay){
             for(int i=0; i<4; i++){
                 double newValue = newCollection[i] +
-                        nutritionalCollection.get(weekDayRotationIndex)[i];
+                        nutritionalCollection.get(rotationIndex)[i];
                 newCollection[i] = newValue;
             }
-            nutritionalCollection.set(weekDayRotationIndex, newCollection);
-        } else if(weekDayRotationIndex>currentDay){
-            nutritionalCollection.set(weekDayRotationIndex, newCollection);
-            currentDay = weekDayRotationIndex;
+            nutritionalCollection.set(rotationIndex, newCollection);
+        } else if(rotationIndex>currentDay){
+            nutritionalCollection.set(rotationIndex, newCollection);
+            currentDay = rotationIndex;
         } else {
-            Log.d("CALORIES_CALCULATOR.UPDATE", "ERRRO SETTING NUTRITIONAL_COLLECTION");
+            Log.d("CALORIES_CALCULATOR.UPDATE", "ERRROR SETTING NUTRITIONAL_COLLECTION");
         }
     }
 
