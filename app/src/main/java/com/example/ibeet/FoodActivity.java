@@ -58,9 +58,6 @@ public class FoodActivity extends AppCompatActivity {
         //initialize textfields
         setText();
 
-        //Give singleton context, so it can access sharedPreferences
-        CaloriesCalculator.getInstance().setContext(this);
-
         sbWeight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

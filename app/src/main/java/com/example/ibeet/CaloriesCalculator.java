@@ -75,8 +75,6 @@ class CaloriesCalculator {
     private double calories, carbGrams, fatGrams, proteinGrams;
     private int currentDay = 0;
 
-    private Context pref;
-    private SharedPreferences preferences_dates;
 
     static CaloriesCalculator getInstance() {
         return ourInstance;
@@ -88,11 +86,6 @@ class CaloriesCalculator {
         nutritionalCollection = new ArrayList<>();
         nutritionalCollection.add(new double[]{0,0,0,0});
     }
-
-
-    public void setContext(Context context){
-        pref = context;
-    } //
 
     /**
      * Purge the old and set new plate values
@@ -141,18 +134,7 @@ class CaloriesCalculator {
 
         double[] newCollection = {calories, carbGrams, proteinGrams, fatGrams};
 
-        preferences_dates = pref.getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
-
-        //Get the time-difference between first launch and time now.
-        long daysInMillis = 1000 * 60 * 60 * 24;    // = 24 hours in milliseconds
-         long daysDifferenceInMillis = (preferences_dates.getLong("CURRENT_DATE", 0) -
-                            preferences_dates.getLong("FIRST_DATE",0));
-
-        //following calculation should produce even number but one can never be too certain
-        int days = Math.toIntExact((daysDifferenceInMillis - (daysDifferenceInMillis % daysInMillis))
-                / daysInMillis);
-
-        //we will only store 7 days worth of usage history, so:
+        int days = TimeCalculator.getInstance().getTimeDiffInDays();
         int weekDayRotationIndex;
         if(days != 0) {
             weekDayRotationIndex = days % 7;
@@ -192,7 +174,7 @@ class CaloriesCalculator {
      * @return double[] averageCollection
      */
     public double[] getWeeksAverageResults(){
-        //Funkion cannot resolve average for last seven days if there havent been seven days
+        //Function cannot resolve average for last seven days if there haven't been seven days
         if(nutritionalCollection.size()!=7){
             return null;
         }
