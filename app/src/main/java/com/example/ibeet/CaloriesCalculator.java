@@ -171,7 +171,7 @@ class CaloriesCalculator {
     /**
      * Get average results of last seven days, including current one:
      *  double calories, double carbGrams, double proteinGrams, double fatGrams
-     *  derp
+     *  derp asd
      * @return double[] averageCollection
      */
     public double[] getWeeksAverageResults(){
