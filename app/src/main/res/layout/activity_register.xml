@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@drawable/login_background"
-    tools:context=".LoginActivity">
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_left"
@@ -25,29 +25,43 @@
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:contentDescription="@string/iconimage"
         android:src="@drawable/loginicon"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/nameText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:autofillHints=""
         android:background="@drawable/edit_text_background"
-        android:hint="@string/email_address"
+        android:hint="@string/enter_name"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/icon" tools:targetApi="o" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:autofillHints=""
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/enter_email_address"
         android:inputType="textEmailAddress"
         android:padding="16dp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/icon"
+        app:layout_constraintTop_toBottomOf="@+id/nameText"
         tools:targetApi="o" />
 
     <EditText
@@ -57,64 +71,73 @@
         android:layout_marginTop="16dp"
         android:autofillHints=""
         android:background="@drawable/edit_text_background"
-        android:hint="@string/password"
+        android:hint="@string/enter_password"
         android:inputType="textPassword"
         android:padding="16dp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/username"
         tools:targetApi="o" />
 
-    <Button
-        android:id="@+id/btn_login"
+    <EditText
+        android:id="@+id/ageText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/login"
-        android:textColor="@color/login"
-        android:textAllCaps="false"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/enter_age"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        android:autofillHints="" tools:targetApi="o" />
+
+    <EditText
+        android:id="@+id/weightText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:inputType="numberSigned"
+        android:textColor="@color/white"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/enter_weight"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/ageText"
+        android:autofillHints="" tools:targetApi="o" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button_background"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
-
-    <TextView
-        android:id="@+id/or"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="66dp"
-        android:text="@string/or"
+        android:text="@string/register"
         android:textAllCaps="false"
         android:textColor="@color/login"
+        app:layout_constraintBottom_toTopOf="@+id/already"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintTop_toBottomOf="@+id/weightText" />
 
     <TextView
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:text="@string/register_here"
-        android:textAllCaps="false"
-        android:textColor="@color/login"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/or" />
-
-    <TextView
-        android:id="@+id/better"
+        android:id="@+id/already"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/off_to_a_better_start"
+        android:text="@string/already_have_an_account_login_here"
         android:textColor="@color/login"
         app:layout_constraintBottom_toTopOf="@+id/footer_line"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@id/guideline_left" />
 
     <View
@@ -129,13 +152,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ibeet"
-        app:layout_constraintTop_toBottomOf="@id/footer_line"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="#fff"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/footer_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_ibeet"
+        android:text="@string/welcome_to_icare"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -23,10 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:text="GOTO food"
-        android:textColor="@color/login_medium"
-        android:textAllCaps="false"
         android:background="@drawable/button_background"
+        android:text="@string/food"
+        android:textAllCaps="false"
+        android:textColor="@color/login_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,10 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="24dp"
-        android:text="GOTO login"
-        android:textColor="@color/login_medium"
-        android:textAllCaps="false"
         android:background="@drawable/button_background"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:textColor="@color/login_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/foodBtn" />
 

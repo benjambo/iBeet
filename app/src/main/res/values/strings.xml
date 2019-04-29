@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">iBeet</string>
-    <string name="hello_ibeet">Hello iBeet!</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -16,4 +15,15 @@
     <string name="password">Password</string>
     <string name="email_address">Email address</string>
     <string name="iconimage">iconImage</string>
+    <string name="food">Food</string>
+    <string name="welcome_to_icare">Welcome to iCare!</string>
+    <string name="register_here">Register here</string>
+    <string name="or">OR</string>
+    <string name="register">Register</string>
+    <string name="enter_email_address">Enter email address</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_age">Enter age</string>
+    <string name="enter_weight">Enter weight</string>
+    <string name="enter_name">Enter name</string>
+    <string name="already_have_an_account_login_here">Already have an account? Login here</string>
 </resources>
