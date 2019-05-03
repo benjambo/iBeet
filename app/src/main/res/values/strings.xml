@@ -26,6 +26,6 @@
     <string name="enter_weight">Enter weight</string>
     <string name="enter_name">Enter name</string>
     <string name="already_have_an_account_login_here">Already have an account? Login here</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
+    <string name="map">Map</string>
+    <string name="where_am_i">Where am I?</string>
 </resources>

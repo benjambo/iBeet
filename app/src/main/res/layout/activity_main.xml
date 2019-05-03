@@ -42,6 +42,19 @@
         android:textAllCaps="false"
         android:textColor="@color/login_medium"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mapbtn" />
+
+    <Button
+        android:id="@+id/mapbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/button_background"
+        android:text="@string/map"
+        android:textAllCaps="false"
+        android:textColor="@color/login_medium"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/foodBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
