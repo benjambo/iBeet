@@ -3,12 +3,15 @@ package com.example.ibeet;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +24,7 @@ private EditText pswd;
 private Button login;
 private TextView register;
 private DatabaseSQL db;
+private SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,14 @@ private DatabaseSQL db;
         pswd = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.btn_login);
 
+        prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStart", false);
+
+        if (firstStart) {
+            Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(mainActivity);
+        }
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,12 +49,10 @@ private DatabaseSQL db;
                 String password = pswd.getText().toString();
 
                 int id= checkUser(new User(name,password));
-                if(id==-1)
-                {
+                if(id==-1) {
                     Toast.makeText(LoginActivity.this,"User Does Not Exist",Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
+                else {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -68,11 +78,19 @@ private DatabaseSQL db;
         ss.setSpan(clickableSpan, 0, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         register.setText(ss);
         register.setMovementMethod(LinkMovementMethod.getInstance());
-
     }
 
-    public int checkUser(User user)
-    {
+    public int checkUser(User user) {
         return db.checkUser(user);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("firstStart", true);
+        editor.commit();
     }
 }
