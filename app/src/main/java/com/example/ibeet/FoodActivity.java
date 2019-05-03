@@ -2,6 +2,10 @@
  *
  *                  FoodActivity
  *
+ *  UI
+ *          The UI is two-staged. You start with statistic view and when you add plate,
+ *          input view replaces statistics.
+ *
  *  User Inputs:
  *          PlateWeigh (50 - 1000)
  *          Percentage of Vegetables to rest of plate (0 - 100)
@@ -19,129 +23,69 @@
 package com.example.ibeet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.StringWriter;
-import java.text.DecimalFormat;
-import java.util.Locale;
+import org.florescu.android.rangeseekbar.RangeSeekBar;
 
 
 public class FoodActivity extends AppCompatActivity {
 
-    private double weight, vegetablePercentage, meatPercentage;
-    private SeekBar sbWeight, sbVege, sbMeat;
-    private Button btnCalculate;
-    private TextView dayTxtV, weekTxtV;
+
+    //Statistics field widgets
+    private TextView caloriesDayText;
+    private TextView caloriesWeekText;
+    private TextView caloriesReco;
+    private TextView dietReco;
+
+    private Button newPlate;
+
+    //input field widgets
+    private RangeSeekBar<Double> rangeSeekBar;
+    private SeekBar plateSize;
+
+    private ConstraintLayout statisticsLay;
+    private ConstraintLayout inputLay;
+
+    private Button cancelButton;
+    private Button inputButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
 
-        //Set a ton of onClickListeners
-        sbWeight = findViewById(R.id.sbWeight);
-        sbVege = findViewById(R.id.sbVege);
-        sbMeat = findViewById(R.id.sbMeat);
-        btnCalculate = findViewById(R.id.calculatePlateBtn);
+        caloriesDayText = findViewById(R.id.caloriesNowText);
+        caloriesWeekText = findViewById(R.id.caloriesWeekText);
+        caloriesReco = findViewById(R.id.calorieReco);
+        dietReco = findViewById(R.id.dietReco);
 
-        //textviews
-        dayTxtV = findViewById(R.id.dayBreakdownTxt);
-        weekTxtV = findViewById(R.id.weekBreakdownTxt);
+        newPlate = findViewById(R.id.newPlate);
 
-        //initialize textfields
-        setText();
+        statisticsLay = findViewById(R.id.statisticLayout);
+        inputLay = findViewById(R.id.inputPlateLayout);
 
-        sbWeight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                weight = (double)progress;
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+        rangeSeekBar = new RangeSeekBar<Double>(this);
+        rangeSeekBar.setRangeValues(0.0, 100.0);
+        rangeSeekBar.setSelectedMaxValue(99.0);
+        rangeSeekBar.setSelectedMinValue(1.0);
 
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(FoodActivity.this, "Weight set to: " +
-                        (1000 * (weight/100) + 50) +
-                                " grams", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        sbVege.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                vegetablePercentage = (double)progress;
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(FoodActivity.this, "Vegetables ratio set to: " + vegetablePercentage +
-                        "%", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        sbMeat.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                meatPercentage = (double)progress;
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(FoodActivity.this, "Meat to carbs ratio" +
-                        " set to: " + meatPercentage + "%", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnCalculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double finalWeight = (1000 * (weight/100) + 50);
-                double vgPercentage = (vegetablePercentage / 100);
-                double mtcPercentage = (meatPercentage / 100);
-                setText();
-
-                /**
-                 * This is still in debugging mode
-                 */
-                CaloriesCalculator.getInstance().setNewPlate(finalWeight, vgPercentage, mtcPercentage);
-                Toast.makeText(FoodActivity.this,
-                        CaloriesCalculator.getInstance().calculatePlate(), Toast.LENGTH_LONG).show();
-            }
-        });
+        plateSize = findViewById(R.id.sizeBar);
     }
 
-    /**
-     * Update statistics in FoodActivity
-     */
-    private void setText(){
-
-        DecimalFormat df = new DecimalFormat("#.#");
-        if(CaloriesCalculator.getInstance().getDaysResults() != null){
-            double[] dayStats = CaloriesCalculator.getInstance().getDaysResults();
-            dayTxtV.setText(("Calories || Carbs ||Protein ||Fats \n" + df.format(dayStats[0]) +
-                    df.format(dayStats[1]) + df.format(dayStats[2]) + df.format(dayStats[3])));
+    private void toggleLayots(){
+        if(statisticsLay.getVisibility()==View.VISIBLE){
+            statisticsLay.setVisibility(View.GONE);
+            inputLay.setVisibility(View.VISIBLE);
+        }else{
+            inputLay.setVisibility(View.GONE);
+            statisticsLay.setVisibility(View.VISIBLE);
         }
-        ///*
-        if(CaloriesCalculator.getInstance().getWeeksAverageResults() != null){
-            double[] weekStats = CaloriesCalculator.getInstance().getWeeksAverageResults();
-            weekTxtV.setText(("Calories || Carbs ||Protein ||Fats \n" + df.format(weekStats[0]) +
-                    df.format(weekStats[1]) + df.format(weekStats[2]) + df.format(weekStats[3])));
-        } //
-
     }
 }
