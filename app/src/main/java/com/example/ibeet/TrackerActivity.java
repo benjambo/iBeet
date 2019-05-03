@@ -28,9 +28,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap;
+    private int markerCount = 0;
     MarkerOptions mo;
     Marker marker;
-    Marker lastMarker;
     LocationManager locationManager;
     private Button center;
 
@@ -71,19 +71,23 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onLocationChanged(Location location) {
+
         final LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
         marker.setPosition(myCoordinates);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
+        //MarkerHandler.getInstance().setNewMarker(myCoordinates);
+        //mMap.addMarker(new MarkerOptions().position(myCoordinates).title("olin tässä aijemmin"));
 
         //Button to center view on the current location
         center = findViewById(R.id.buttoncenter);
         center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
+                float zoomlvl = 16.0f;
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myCoordinates, zoomlvl));
             }
         });
+
+
     }
 
     @Override
