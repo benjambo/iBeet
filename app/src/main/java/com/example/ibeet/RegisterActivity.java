@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //Get text
                 String names = name.getText().toString();
                 String ages = age.getText().toString();
-                String gender = male.getText().toString();
+                String gender = male.getText().toString(); //Doesnt work yet
 
                 //Saving name, age and sex to shared preferences
                 myPrefs = getSharedPreferences(" com.example.ibeet.DATES", Context.MODE_PRIVATE);
