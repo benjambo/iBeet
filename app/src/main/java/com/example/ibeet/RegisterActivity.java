@@ -57,14 +57,14 @@ public class RegisterActivity extends AppCompatActivity {
                 //Get text
                 String names = name.getText().toString();
                 String ages = age.getText().toString();
-                String gender = male.getText().toString(); //Doesnt work yet
+                String gender = male.getText().toString(); //Make it work
 
                 //Saving name, age and sex to shared preferences
                 myPrefs = getSharedPreferences(" com.example.ibeet.DATES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.putString("nameKey", names);
                 editor.putInt("ageKey", Integer.parseInt(ages));
-                editor.putBoolean("sexKey", Boolean.valueOf(gender));
+                editor.putBoolean("sexKey", Boolean.valueOf(gender)); // Doesnt work right
                 editor.apply();
 
                 Log.d("KOOL", "works: " + ages + names + gender);
