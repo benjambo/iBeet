@@ -55,15 +55,9 @@
 
 package com.example.ibeet;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
+
 
 class CaloriesCalculator {
     private static final CaloriesCalculator ourInstance = new CaloriesCalculator();
@@ -124,7 +118,7 @@ class CaloriesCalculator {
 
 
     /**
-     * Update a nutritional breakdown into app's storage. The method stacks and indexes data by day.
+     * Update latest data to device memory. This function 'extends' calculatePlate()
      * @param calories : double
      * @param carbGrams : double
      * @param proteinGrams : double
@@ -154,7 +148,8 @@ class CaloriesCalculator {
     }
 
     /**
-     *  Get days results: double calories, double carbGrams, double proteinGrams, double fatGrams
+     *  Get days results as a double[] array
+     *  : double calories, double carbGrams, double proteinGrams, double fatGrams
      * @return double[] nutritionalCollection(currentDay)
      */
     public double[] getDaysResults(){
@@ -162,9 +157,8 @@ class CaloriesCalculator {
     }
 
     /**
-     * Get average results of last seven days, including current one:
-     *  double calories, double carbGrams, double proteinGrams, double fatGrams
-     *  derp asd
+     * Get average results of last seven days, including current one as double[] array
+     * : double calories, double carbGrams, double proteinGrams, double fatGrams
      * @return double[] averageCollection
      */
     public double[] getWeeksAverageResults(){
@@ -183,5 +177,38 @@ class CaloriesCalculator {
             averageCollection[i] = averageValue;
         }
         return averageCollection;
+    }
+
+    /**
+     * Get days calories comparison
+     * @return caloriesDifference : double
+     */
+    public double getDaysComparison(){
+        int comparisonCalories = getCalorieNeed().getCaloriesAmount(true, 1);
+        double currentCalories = getDaysResults()[0];
+        return comparisonCalories - currentCalories;
+    }
+
+    /**
+     * Get weeks calories comparison
+     * @return caloriesDifference : double
+     */
+    public double getWeeksComparison(){
+        int comparisonCalories = getCalorieNeed().getCaloriesAmount(true, 1);
+        double currentCalories = getWeeksAverageResults()[0];
+        return comparisonCalories - currentCalories;
+    }
+
+    /**
+     * Quick method to get the right calorie need "row" from calorieNeeds "table"
+     * @return calorieNeed : CalorieNeed
+     */
+    private CalorieNeed getCalorieNeed(){
+        int age = 22;   //Get from database when done
+        for(int i=0;1<calorieNeeds.size();i++){
+            if(calorieNeeds.get(i).getAge() == age){  return calorieNeeds.get(i);
+            } else if(calorieNeeds.get(i).getAge() > age){return calorieNeeds.get(--i);}
+        }
+        return null;
     }
 }
