@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button food;
     private Button login;
+    private Button mapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(foodActivity);
             }
         });
+
+        //mapButton = findViewById();
 
         login = findViewById(R.id.loginBtn);
         login.setOnClickListener(new View.OnClickListener() {
