@@ -1,8 +1,5 @@
 package com.example.ibeet;
 
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -11,7 +8,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,7 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.jar.Pack200;
+
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
@@ -29,6 +32,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     Marker marker;
     Marker lastMarker;
     LocationManager locationManager;
+    private Button center;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -67,10 +71,19 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onLocationChanged(Location location) {
-        LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
+        final LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
         marker.setPosition(myCoordinates);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
 
+        //Button to center view on the current location
+        center = findViewById(R.id.buttoncenter);
+        center.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
+            }
+        });
     }
 
     @Override
@@ -95,8 +108,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         criteria.setPowerRequirement(criteria.POWER_HIGH);
         String provider = locationManager.getBestProvider(criteria, true);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    Activity#requestPermissions
+
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)

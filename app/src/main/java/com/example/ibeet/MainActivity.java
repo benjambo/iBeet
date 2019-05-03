@@ -30,7 +30,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //mapButton = findViewById();
+        mapButton = findViewById(R.id.mapbtn);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapActivity = new Intent(MainActivity.this, TrackerActivity.class);
+                startActivity(mapActivity);
+            }
+        });
 
         login = findViewById(R.id.loginBtn);
         login.setOnClickListener(new View.OnClickListener() {
