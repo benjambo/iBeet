@@ -57,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Get text
                 String names = name.getText().toString();
+                String usernames = username.getText().toString();
+                String passwords = password.getText().toString();
                 String ages = age.getText().toString();
                 String gender = sex.toString();
 
@@ -64,6 +66,8 @@ public class RegisterActivity extends AppCompatActivity {
                 myPrefs = getSharedPreferences(" com.example.ibeet.DATES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.putString("nameKey", names);
+                editor.putString("userKey", usernames);
+                editor.putString("passKey", passwords);
                 editor.putString("ageKey", ages);
                 editor.putBoolean("sexKey", Boolean.valueOf(gender));
                 editor.apply();
