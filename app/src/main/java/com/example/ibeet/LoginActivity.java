@@ -30,6 +30,8 @@ private SharedPreferences prefs;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        TimeCalculator.getInstance().updateDate(this);
+
         uname = (EditText) findViewById(R.id.username);
         pswd = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.btn_login);

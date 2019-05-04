@@ -72,7 +72,9 @@ public class FoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
 
+        //setup Singletons
         TimeCalculator.getInstance().updateDate(this);
+        CaloriesCalculator.getInstance().setupUser(this);
 
         //Init statistics Widgets
         caloriesDayText = findViewById(R.id.caloriesNowText);
@@ -149,6 +151,18 @@ public class FoodActivity extends AppCompatActivity {
         CaloriesCalculator.getInstance().writeIntoDB(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CaloriesCalculator.getInstance().writeIntoDB(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateViews();
+    }
+
     //(Button) Listeners
     private View.OnClickListener myListener = new View.OnClickListener() {
         @Override
@@ -164,7 +178,7 @@ public class FoodActivity extends AppCompatActivity {
                     double vegePercent = plateFirstDivision / 100;
                     double meatPercent = (plateSecondDivision - plateFirstDivision) / 100;
                     CaloriesCalculator.getInstance().setNewPlate(weightValue, vegePercent, meatPercent);
-                    String foo = CaloriesCalculator.getInstance().calculatePlate();
+                    //String foo = CaloriesCalculator.getInstance().calculatePlate();
                     toggleLayouts();
                     break;
             }

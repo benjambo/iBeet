@@ -56,6 +56,7 @@
 package com.example.ibeet;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.sql.Time;
@@ -72,10 +73,15 @@ class CaloriesCalculator {
     private double calories, carbGrams, fatGrams, proteinGrams;
 
     //Debugging
-    private final static int AGE = 22;
+    //private final static int AGE = 22;
     private final static int ACTIVITY_MODE = 1;
-    private final static boolean GENDER_IS_MALE = true;
+    //private final static boolean GENDER_IS_MALE = true;
 
+    private SharedPreferences prefs;
+    private static final String PREFS_DATES = "com.example.ibeet.DATES";
+    private int AGE;
+    //private int ACTIVITY_MODE;
+    private boolean GENDER_IS_MALE;
 
     static CaloriesCalculator getInstance() {
         return ourInstance;
@@ -89,6 +95,7 @@ class CaloriesCalculator {
         for(int i=0;i<7;i++){
             nutritionalCollection.add(new double[]{0, 0, 0, 0});
         }
+
     }
 
     /**
@@ -229,8 +236,57 @@ class CaloriesCalculator {
         return 0;
     }
 
+    /**
+     * Upon exiting this Activity, store some info in sql database
+     * @param context : Context
+     */
     public void writeIntoDB(Context context){
-        DatabaseSQL myDB = new DatabaseSQL(context);
+        prefs = context.getSharedPreferences(PREFS_DATES,context.MODE_PRIVATE);
+        String user = prefs.getString("userKey", "");
 
+        DatabaseSQL myDB = new DatabaseSQL(context);
+        myDB.setFoodStatsTable(user, nutritionalCollection, getDaysResults());
+        myDB.close();
+    }
+
+    /**
+     * Initialize an empty database so we avoid Index outOfBounds errors
+     * @param context : Context
+     */
+    public void writeEmptyIntoDb(Context context){
+        for(int i=0;i<7;i++){
+            nutritionalCollection.add(new double[]{0, 0, 0, 0});
+        }
+        writeIntoDB(context);
+    }
+
+    /**
+     * Fetch and put up database data
+     * @param context : Context
+     */
+    public void setupUser(Context context){
+        prefs = context.getSharedPreferences(PREFS_DATES, Context.MODE_PRIVATE);
+        String AGE_String = prefs.getString("ageKey", "20");
+        AGE = Integer.parseInt(AGE_String);
+        GENDER_IS_MALE = prefs.getBoolean("sexKey", true);
+
+        String user = prefs.getString("userKey", "");
+        DatabaseSQL myDB = new DatabaseSQL(context);
+        double[] statData = myDB.getFoodStatsTable(user);
+
+        //Set weekly calories
+        for(int i=0;i<7;i++){
+            nutritionalCollection.set(i,
+                    new double[]{statData[i+3] , 0, 0, 0}
+                    );
+        }
+
+        //set this days all stats
+        for(int i=0;i<4;i++){
+            nutritionalCollection.set(TimeCalculator.getInstance().getDayRotation(),
+                    new double[]{statData[0], statData[1], statData[2], statData[3]}
+            );
+        }
+        myDB.close();
     }
 }

@@ -36,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        TimeCalculator.getInstance().updateDate(this);
+
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         name = (EditText) findViewById(R.id.nameText);
@@ -53,7 +55,14 @@ public class RegisterActivity extends AppCompatActivity {
                 db=new DatabaseSQL(RegisterActivity.this);
 
                 //Adding users name and password to database
+                /*
                 db.addUser(new User(username.getText().toString(), password.getText().toString()));
+                */
+
+                //Version.2
+                //Add new user to database and send instance var to Calculator
+                User user = new User(username.getText().toString(), password.getText().toString());
+                db.addUser(user);
 
                 //Get text
                 String names = name.getText().toString();
@@ -63,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String gender = sex.toString();
 
                 //Saving name, age and sex to shared preferences
-                myPrefs = getSharedPreferences(" com.example.ibeet.DATES", Context.MODE_PRIVATE);
+                myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.putString("nameKey", names);
                 editor.putString("userKey", usernames);
@@ -80,6 +89,9 @@ public class RegisterActivity extends AppCompatActivity {
                         age.getText().toString().trim().equals("")){
                     Toast.makeText(getBaseContext(),"Please Fill in All the Input Fields", Toast.LENGTH_LONG).show();
                 }else{
+                    //perform init for food database
+                    CaloriesCalculator.getInstance().writeEmptyIntoDb(RegisterActivity.this);
+
                     //do what you want with the entered text
                     Intent mainActivity = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(mainActivity);
