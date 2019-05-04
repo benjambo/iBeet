@@ -28,7 +28,7 @@
         android:background="@drawable/button_background"
         android:text="@string/food"
         android:textAllCaps="false"
-        android:textColor="@color/login_medium"
+        android:textColor="@color/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +41,7 @@
         android:background="@drawable/button_background"
         android:text="@string/login"
         android:textAllCaps="false"
-        android:textColor="@color/login_medium"
+        android:textColor="@color/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mapbtn" />
 
@@ -54,7 +54,7 @@
         android:background="@drawable/button_background"
         android:text="@string/map"
         android:textAllCaps="false"
-        android:textColor="@color/login_medium"
+        android:textColor="@color/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/foodBtn" />
 
