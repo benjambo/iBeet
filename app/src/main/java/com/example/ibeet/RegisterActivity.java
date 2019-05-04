@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
     private TextView already;
@@ -63,14 +64,22 @@ public class RegisterActivity extends AppCompatActivity {
                 myPrefs = getSharedPreferences(" com.example.ibeet.DATES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.putString("nameKey", names);
-                editor.putInt("ageKey", Integer.parseInt(ages));
+                editor.putString("ageKey", ages);
                 editor.putBoolean("sexKey", Boolean.valueOf(gender));
                 editor.apply();
 
-                Log.d("KOOL", "works: " + ages + names + gender);
+                Log.d("KOOL", "works: " + names + " " + ages + " " + gender);
 
-                Intent mainActivity = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(mainActivity);
+                if (name.getText().toString().trim().equals("") ||
+                        username.getText().toString().trim().equals("") ||
+                        password.getText().toString().trim().equals("") ||
+                        age.getText().toString().trim().equals("")){
+                    Toast.makeText(getBaseContext(),"Please Fill in All the Input Fields", Toast.LENGTH_LONG).show();
+                }else{
+                    //do what you want with the entered text
+                    Intent mainActivity = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(mainActivity);
+                }
             }
         });
 
