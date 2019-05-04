@@ -6,7 +6,7 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_username">Not a valid name</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="ibeet">iBeet</string>
@@ -55,6 +55,10 @@
     <string name="dietreco_lowcarb"> and eat more carbohydrates</string>
     <string name="dietreco_lowfat"> and eat some fats</string>
     <string name="dietreco_lowprot"> and eat more protein</string>
+    <string name="enter_username">Enter username</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="username">Username</string>
 
     <!-- END OF FOOD_PAGE -->
 </resources>

@@ -19,16 +19,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
     private TextView already;
     private Button registerButton;
-    private EditText email, password, name, age;
+    private EditText username, password, name, age;
     private DatabaseSQL db;
     private SharedPreferences myPrefs;
     private RadioGroup toggle;
-    private RadioButton male;
+    private RadioButton male, female;
     private Boolean sex = true;
 
     @Override
@@ -36,11 +35,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        email = (EditText) findViewById(R.id.username);
+        username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         name = (EditText) findViewById(R.id.nameText);
         age = (EditText) findViewById(R.id.ageText);
         male = (RadioButton) findViewById(R.id.radioButtonMale);
+        female = (RadioButton) findViewById(R.id.radioButtonFemale);
 
         myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
 
@@ -51,20 +51,20 @@ public class RegisterActivity extends AppCompatActivity {
                 //inserting registered accounts to database
                 db=new DatabaseSQL(RegisterActivity.this);
 
-                //Adding users email and password to database
-                db.addUser(new User(email.getText().toString(), password.getText().toString()));
+                //Adding users name and password to database
+                db.addUser(new User(username.getText().toString(), password.getText().toString()));
 
                 //Get text
                 String names = name.getText().toString();
                 String ages = age.getText().toString();
-                String gender = male.getText().toString(); //Make it work
+                String gender = sex.toString();
 
                 //Saving name, age and sex to shared preferences
                 myPrefs = getSharedPreferences(" com.example.ibeet.DATES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.putString("nameKey", names);
                 editor.putInt("ageKey", Integer.parseInt(ages));
-                editor.putBoolean("sexKey", Boolean.valueOf(gender)); // Doesnt work right
+                editor.putBoolean("sexKey", Boolean.valueOf(gender));
                 editor.apply();
 
                 Log.d("KOOL", "works: " + ages + names + gender);

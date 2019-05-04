@@ -54,7 +54,7 @@
         android:layout_marginTop="16dp"
         android:autofillHints=""
         android:background="@drawable/edit_text_background"
-        android:hint="@string/enter_email_address"
+        android:hint="@string/enter_username"
         android:inputType="textEmailAddress"
         android:padding="16dp"
         android:textColor="@color/white"
@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:layout_weight="1"
-            android:text="male"
+            android:text="@string/male"
             android:textAlignment="center" />
 
         <RadioButton
@@ -173,7 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="female"
+            android:text="@string/female"
             android:textAlignment="center" />
     </RadioGroup>
 

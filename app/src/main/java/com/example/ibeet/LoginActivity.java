@@ -48,8 +48,8 @@ private SharedPreferences prefs;
                 String name = uname.getText().toString();
                 String password = pswd.getText().toString();
 
-                int id= checkUser(new User(name,password));
-                if(id==-1) {
+                int id = checkUser(new User(name,password));
+                if(id == -1) {
                     Toast.makeText(LoginActivity.this,"User Does Not Exist",Toast.LENGTH_SHORT).show();
                 }
                 else {
