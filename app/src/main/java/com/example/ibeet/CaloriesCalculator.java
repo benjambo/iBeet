@@ -55,7 +55,10 @@
 
 package com.example.ibeet;
 
+import android.content.Context;
 import android.util.Log;
+
+import java.sql.Time;
 import java.util.ArrayList;
 
 
@@ -67,7 +70,11 @@ class CaloriesCalculator {
 
     private double plateWeight, vegetablePercentage, meatToCarbsPercentage;
     private double calories, carbGrams, fatGrams, proteinGrams;
-    private int currentDay = 0;
+
+    //Debugging
+    private final static int AGE = 22;
+    private final static int ACTIVITY_MODE = 1;
+    private final static boolean GENDER_IS_MALE = true;
 
 
     static CaloriesCalculator getInstance() {
@@ -78,7 +85,10 @@ class CaloriesCalculator {
         FoodListGenerator foodListGenerator = new FoodListGenerator();
         calorieNeeds = foodListGenerator.getList();
         nutritionalCollection = new ArrayList<>();
-        nutritionalCollection.add(new double[]{0,0,0,0});
+
+        for(int i=0;i<7;i++){
+            nutritionalCollection.add(new double[]{0, 0, 0, 0});
+        }
     }
 
     /**
@@ -109,11 +119,7 @@ class CaloriesCalculator {
         fatGrams = ((0.25 * 0.1 * meatWeight) + (0.05 * carbWeight));
 
         update(calories, carbGrams, proteinGrams, fatGrams);
-        /**
-         * This is still in debugging mode
-         */
-        return "Calories: " + calories + " || carbs: " + carbGrams + " || protein: " + proteinGrams +
-                " || fat: " + fatGrams;
+        return " ";
     }
 
 
@@ -124,26 +130,31 @@ class CaloriesCalculator {
      * @param proteinGrams : double
      * @param fatGrams : double
      */
-    public void update(double calories, double carbGrams, double proteinGrams, double fatGrams){
+    private void update(double calories, double carbGrams, double proteinGrams, double fatGrams){
 
         double[] newCollection = {calories, carbGrams, proteinGrams, fatGrams};
 
-        int rotationIndex = TimeCalculator.getInstance().getDayRotation();
-
         //make sure we stack current days info, not overwrite it
         //when week passes, previous weekdays get overwritten.
-        if(rotationIndex == currentDay){
+        //
+        // - if a day has not passed since last update
+        // - else if day has passed since last update
+        // - else error
+        //
+        int rotationIndex = TimeCalculator.getInstance().getDayRotation();
+
+        if(rotationIndex == TimeCalculator.getInstance().getComparativeDay()){
             for(int i=0; i<4; i++){
-                double newValue = newCollection[i] +
-                        nutritionalCollection.get(rotationIndex)[i];
+                double newValue = (newCollection[i] +
+                        nutritionalCollection.get(rotationIndex)[i]);
                 newCollection[i] = newValue;
             }
             nutritionalCollection.set(rotationIndex, newCollection);
-        } else if(rotationIndex>currentDay){
+        } else if(rotationIndex != TimeCalculator.getInstance().getComparativeDay()){
             nutritionalCollection.set(rotationIndex, newCollection);
-            currentDay = rotationIndex;
+            TimeCalculator.getInstance().setComparativeDay(rotationIndex);
         } else {
-            Log.d("CALORIES_CALCULATOR.UPDATE", "ERRROR SETTING NUTRITIONAL_COLLECTION");
+            Log.d("CALORIES_CALCULATOR.UPDATE", "ERROR SETTING NUTRITIONAL_COLLECTION");
         }
     }
 
@@ -153,24 +164,26 @@ class CaloriesCalculator {
      * @return double[] nutritionalCollection(currentDay)
      */
     public double[] getDaysResults(){
-        return nutritionalCollection.get(currentDay);
+        return nutritionalCollection.get(TimeCalculator.getInstance().getDayRotation());
     }
 
     /**
      * Get average results of last seven days, including current one as double[] array
+     * If seven days have not passed yet, we count less
      * : double calories, double carbGrams, double proteinGrams, double fatGrams
      * @return double[] averageCollection
      */
     public double[] getWeeksAverageResults(){
-        //Function cannot resolve average for last seven days if there haven't been seven days
-        if(nutritionalCollection.size()!=7){
-            return null;
+
+        int lastIndex = 7;
+        if(TimeCalculator.getInstance().getTimeDiffInDays()<7){
+            lastIndex = TimeCalculator.getInstance().getTimeDiffInDays();
         }
         double averageValue = 0;
         double[] averageCollection = new double[4];
 
         for(int i = 0; i<4; i++){
-            for(int j = 0; j<7; j++){
+            for(int j = 0; j<lastIndex; j++){
                 averageValue += nutritionalCollection.get(j)[i];
             }
             averageValue /= 7;
@@ -184,7 +197,7 @@ class CaloriesCalculator {
      * @return caloriesDifference : double
      */
     public double getDaysComparison(){
-        int comparisonCalories = getCalorieNeed().getCaloriesAmount(true, 1);
+        int comparisonCalories = getCalorieNeed();
         double currentCalories = getDaysResults()[0];
         return comparisonCalories - currentCalories;
     }
@@ -194,7 +207,7 @@ class CaloriesCalculator {
      * @return caloriesDifference : double
      */
     public double getWeeksComparison(){
-        int comparisonCalories = getCalorieNeed().getCaloriesAmount(true, 1);
+        int comparisonCalories = getCalorieNeed();
         double currentCalories = getWeeksAverageResults()[0];
         return comparisonCalories - currentCalories;
     }
@@ -203,12 +216,21 @@ class CaloriesCalculator {
      * Quick method to get the right calorie need "row" from calorieNeeds "table"
      * @return calorieNeed : CalorieNeed
      */
-    private CalorieNeed getCalorieNeed(){
-        int age = 22;   //Get from database when done
+    public int getCalorieNeed(){
+         int age = AGE;   //Get from database when done
         for(int i=0;1<calorieNeeds.size();i++){
-            if(calorieNeeds.get(i).getAge() == age){  return calorieNeeds.get(i);
-            } else if(calorieNeeds.get(i).getAge() > age){return calorieNeeds.get(--i);}
+            if(calorieNeeds.get(i).getAge() == age){  return calorieNeeds.get(i).getCaloriesAmount(
+                    GENDER_IS_MALE, ACTIVITY_MODE
+            );
+            } else if(calorieNeeds.get(i).getAge() > age){return calorieNeeds.get(--i).getCaloriesAmount(
+                    GENDER_IS_MALE, ACTIVITY_MODE
+            );}
         }
-        return null;
+        return 0;
+    }
+
+    public void writeIntoDB(Context context){
+        DatabaseSQL myDB = new DatabaseSQL(context);
+
     }
 }

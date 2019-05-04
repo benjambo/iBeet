@@ -53,7 +53,6 @@ class TimeCalculator {
             editor_date.putLong("CURRENT_DATE", firstDate);
         }
         editor_date.apply();
-
     }
 
     /**
@@ -86,5 +85,21 @@ class TimeCalculator {
         int days = Math.toIntExact((daysDifferenceInMillis - (daysDifferenceInMillis % daysInMillis))
                 / daysInMillis);
         return days;
+    }
+
+    /**
+     * Set new day index
+     * @param d : int
+     */
+    public void setComparativeDay(int d){
+        editor_date.putInt("COMPARATIVE", d);
+    }
+
+    /**
+     * Get comparative day index
+     * @return day : int
+     */
+    public int getComparativeDay(){
+        return preferences_dates.getInt("COMPARATIVE", 0);
     }
 }
