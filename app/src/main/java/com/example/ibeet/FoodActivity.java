@@ -26,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,10 +36,13 @@ import android.widget.Toast;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
-import java.sql.Time;
-
 
 public class FoodActivity extends AppCompatActivity {
+
+    //static dietary balance until options are established
+    private final static double PERCENT_CARBS = 0.55;
+    private final static double PERCENT_PROT = 0.3;
+    private final static double PERCENT_FAT = 0.15;
 
     private double weightValue = 0;
     private double plateFirstDivision = 0;
@@ -51,7 +53,6 @@ public class FoodActivity extends AppCompatActivity {
     private TextView caloriesWeekText;
     private TextView calCompDayText;
     private TextView calCompWeekText;
-    private TextView caloriesReco;
     private TextView dietReco;
 
     private Button setNewPlate;
@@ -81,7 +82,6 @@ public class FoodActivity extends AppCompatActivity {
         caloriesWeekText = findViewById(R.id.caloriesWeekText);
         calCompDayText = findViewById(R.id.caloriesDayComp);
         calCompWeekText = findViewById(R.id.caloriesWeekComp);
-        caloriesReco = findViewById(R.id.reco);
         dietReco = findViewById(R.id.dietReco);
 
         //Init Layouts
@@ -178,7 +178,7 @@ public class FoodActivity extends AppCompatActivity {
                     double vegePercent = plateFirstDivision / 100;
                     double meatPercent = (plateSecondDivision - plateFirstDivision) / 100;
                     CaloriesCalculator.getInstance().setNewPlate(weightValue, vegePercent, meatPercent);
-                    //String foo = CaloriesCalculator.getInstance().calculatePlate();
+                    String foo = CaloriesCalculator.getInstance().calculatePlate();
                     toggleLayouts();
                     break;
             }
@@ -219,8 +219,11 @@ public class FoodActivity extends AppCompatActivity {
         caloriesWeekText.setText(calThisWeek);
 
         //set comparative stats
-        calCompDayText.setText(getCompString(0));
-        calCompWeekText.setText(getCompString(1));
+        calCompDayText.setText(viewStringBuild(0));
+        calCompWeekText.setText(viewStringBuild(1));
+
+        //set recommendations
+        dietReco.setText(viewStringBuild(2));
     }
 
     /**
@@ -229,11 +232,11 @@ public class FoodActivity extends AppCompatActivity {
      * @param i : int
      * @return message : String
      */
-    private String getCompString(int i) {
+    private String viewStringBuild(int i) {
         int foo; //foo is Recommended calories - hadCalories
         int bar; //bar is recommended calories
 
-        //toggle between dayComp and weekComp
+        //build day comparison
         if (i == 0) {
 
             foo = (int)CaloriesCalculator.getInstance().getDaysComparison();
@@ -251,12 +254,13 @@ public class FoodActivity extends AppCompatActivity {
             } else if(isBetween(foo, Integer.MIN_VALUE, -1000)){
                 return getResources().getString(R.string.cal_day_comp_veryhigh)+ fooBar;
             } else {
-                Log.d("", "getCompString: getCompString OR " +
+                Log.d("", "viewStringBuild: viewStringBuild OR " +
                         "CaloriesCalculator.--.get% %Comparison BROKE");
                 return "";
             }
 
-        } else {
+            //build week comparison
+        } else if(i == 1){
 
             foo = (int)CaloriesCalculator.getInstance().getWeeksComparison();
             bar = CaloriesCalculator.getInstance().getCalorieNeed();
@@ -276,11 +280,46 @@ public class FoodActivity extends AppCompatActivity {
             } else if(isBetween(foo, Integer.MIN_VALUE, -1500)){
                 return getResources().getString(R.string.cal_week_comp_veryhigh) + fooBar;
             } else {
-                Log.d("", "getCompString: getCompString OR " +
+                Log.d("", "viewStringBuild: viewStringBuild OR " +
                         "CaloriesCalculator.--.getWeeksAverageResults BROKE");
                 return "";
             }
+
+            //build dietary recommendation
+        } else if(i == 2){
+
+            double[] today = CaloriesCalculator.getInstance().getDaysResults();
+            double percentCarb = today[1] / (today[1] + today[2] + today[3]);
+            double percentProt = today[2] / (today[1] + today[2] + today[3]);
+
+            StringBuilder buildReco = new StringBuilder();
+
+            if(today[0] == 0){
+                return getResources().getString(R.string.dietreco_null);
+            } else if(0.4 <= percentCarb && 0.6 >= percentCarb &&
+                        0.2 <= percentProt && 0.3 >= percentCarb){
+                return  getResources().getString(R.string.dietreco_neutral);
+            } else {
+
+                if(percentCarb>0.6){
+                    buildReco.append(getResources().getString(R.string.dietreco_highcarb));
+                } else if(percentProt > 0.3){
+                    buildReco.append(getResources().getString(R.string.dietreco_highprot));
+                } else {
+                    buildReco.append(getResources().getString(R.string.dietreco_highfat));
+                }
+
+                if(percentCarb < 0.4){
+                    buildReco.append(getResources().getString(R.string.dietreco_lowcarb));
+                } else if(percentProt < 0.2){
+                    buildReco.append(getResources().getString(R.string.dietreco_lowprot));
+                } else {
+                    buildReco.append(getResources().getString(R.string.dietreco_lowfat));
+                }
+                return buildReco.toString();
+            }
         }
+        return "";
     }
 
     /**

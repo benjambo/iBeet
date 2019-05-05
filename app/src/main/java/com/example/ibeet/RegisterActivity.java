@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(),"Please Fill in All the Input Fields", Toast.LENGTH_LONG).show();
                 }else{
                     //perform init for food database
-                    CaloriesCalculator.getInstance().writeEmptyIntoDb(RegisterActivity.this);
+                    //CaloriesCalculator.getInstance().writeEmptyIntoDb(RegisterActivity.this);
 
                     //do what you want with the entered text
                     Intent mainActivity = new Intent(RegisterActivity.this, MainActivity.class);

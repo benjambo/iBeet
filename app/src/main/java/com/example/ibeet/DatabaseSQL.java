@@ -117,21 +117,22 @@ public class DatabaseSQL extends SQLiteOpenHelper {
 
     /**
      * Update foodstats to SQL
-     * Firstdays (calories, carbs, protein, fats )
-     * + weeks calories (1st, 2nd, 3rd, 4th, 5th, 6th) day
+     *   +  Firstdays (calories, carbs, protein, fats )
+     *   +  weeks calories (1st, 2nd, 3rd, 4th, 5th, 6th) day
      * @param user : String
-     * @param weeksResult : Arraylist<double> we will only every list member's first value
-     * @param daysResult : double[]
+     * @param weeksResult : Arraylist<double>
      */
-    public void setFoodStatsTable(String user, ArrayList<double[]> weeksResult, double[] daysResult){
+    public void setFoodStatsTable(String user, ArrayList<double[]> weeksResult){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
+        int currentDay = TimeCalculator.getInstance().getDayRotation();
+
         cv.put(Col_1, user);
         //days values
-        cv.put(Col_2, daysResult[0]);
-        cv.put(Col_3, daysResult[1]);
-        cv.put(Col_4, daysResult[2]);
-        cv.put(Col_5, daysResult[3]);
+        cv.put(Col_2, weeksResult.get(currentDay)[0]);
+        cv.put(Col_3, weeksResult.get(currentDay)[1]);
+        cv.put(Col_4, weeksResult.get(currentDay)[2]);
+        cv.put(Col_5, weeksResult.get(currentDay)[3]);
 
         //weeks values
         cv.put(Col_6, weeksResult.get(0)[0]);
