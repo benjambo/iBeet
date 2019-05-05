@@ -78,6 +78,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //MarkerHandler.getInstance().setNewMarker(myCoordinates);
         mMap.addMarker(new MarkerOptions().position(myCoordinates).title("olin tässä aijemmin"));
 
+        //yyeeeet
 
         //Button to center view on the current location
         center = findViewById(R.id.buttoncenter);
