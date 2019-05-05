@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/login_background"
+    android:background="@drawable/backgroundorange"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
@@ -54,7 +54,7 @@
         android:layout_marginTop="16dp"
         android:autofillHints=""
         android:background="@drawable/edit_text_background"
-        android:hint="@string/enter_email_address"
+        android:hint="@string/enter_username"
         android:inputType="textEmailAddress"
         android:padding="16dp"
         android:textColor="@color/white"
@@ -86,16 +86,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:padding="16dp"
-        android:textColor="@color/white"
+        android:autofillHints=""
         android:background="@drawable/edit_text_background"
         android:hint="@string/enter_age"
         android:inputType="numberSigned"
+        android:padding="16dp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        android:autofillHints="" tools:targetApi="o" />
+        tools:targetApi="o" />
 
     <Button
         android:id="@+id/btn_register"

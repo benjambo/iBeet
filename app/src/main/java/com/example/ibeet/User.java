@@ -7,16 +7,16 @@ public class User {
 
     //Needs two constructors to function right!
     //Constructor containing two needed parameters
-    public User(String name,String password)
+    public User(String name, String password)
     {
-        this.name=name;
+        this.name = name;
         this.password=password;
     }
     //Constructor containing all three parameters
-    public User(int id,String name,String psd)
+    public User(int id, String usr, String psd)
     {
         this.id=id;
-        this.name=name;
+        this.name = usr;
         this.password=psd;
     }
 

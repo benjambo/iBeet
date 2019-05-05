@@ -30,6 +30,8 @@ private SharedPreferences prefs;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        TimeCalculator.getInstance().updateDate(this);
+
         uname = (EditText) findViewById(R.id.username);
         pswd = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.btn_login);
@@ -48,8 +50,8 @@ private SharedPreferences prefs;
                 String name = uname.getText().toString();
                 String password = pswd.getText().toString();
 
-                int id= checkUser(new User(name,password));
-                if(id==-1) {
+                int id = checkUser(new User(name,password));
+                if(id == -1) {
                     Toast.makeText(LoginActivity.this,"User Does Not Exist",Toast.LENGTH_SHORT).show();
                 }
                 else {

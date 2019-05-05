@@ -6,7 +6,7 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_username">Not a valid name</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="ibeet">iBeet</string>
@@ -16,7 +16,7 @@
     <string name="email_address">Email address</string>
     <string name="iconimage">iconImage</string>
     <string name="food">Food</string>
-    <string name="welcome_to_icare">Welcome to iCare!</string>
+    <string name="welcome_to_icare">Welcome to iCare \nDebug page!</string>
     <string name="register_here">Register here</string>
     <string name="or">OR</string>
     <string name="register">Register</string>
@@ -28,4 +28,37 @@
     <string name="already_have_an_account_login_here">Already have an account? Login here</string>
     <string name="map">Map</string>
     <string name="where_am_i">Where am I?</string>
+    <string name="save">Save</string>
+    <string name="new_meal">New Meal</string>
+
+    <!-- THESE ARE FOR FOOD_PAGE MESSAGES -->
+    <string name="cal_day">Your calories today: </string>
+    <string name="cal_week">Your calories this week: </string>
+
+    <string name="cal_day_comp_neutral">You have reached your daily recommended calories! </string>
+    <string name="cal_day_comp_low">You are just behind your daily recommended calories: </string>
+    <string name="cal_day_comp_verylow">You are well behind your daily recommended calories: </string>
+    <string name="cal_day_comp_high">You are a bit over your daily recommended calories: </string>
+    <string name="cal_day_comp_veryhigh">You are way over your daily recommended calories: </string>
+
+    <string name="cal_week_comp_neutral">Your last weeks calorie balance looks good!</string>
+    <string name="cal_week_comp_low">You are a bit behind in your weekly calories balance: </string>
+    <string name="cal_week_comp_verylow">You are way behind your weekly calories balance: </string>
+    <string name="cal_week_comp_high">You are going a bit over your weekly calories balance: </string>
+    <string name="cal_week_comp_veryhigh">You are way over your weekly calories balance: </string>
+    <string name="cal_week_comp_exception">No weekly comparison due to account being less than day old</string>
+
+    <string name="dietreco_neutral">You are doing well with your dietary balance!</string>
+    <string name="dietreco_highcarb">You might want to lessen your carbohydrate intake</string>
+    <string name="dietreco_highfat">You might want to limit your fats intake</string>
+    <string name="dietreco_highprot">You might want to lessen your protein intake</string>
+    <string name="dietreco_lowcarb"> and eat more carbohydrates</string>
+    <string name="dietreco_lowfat"> and eat some fats</string>
+    <string name="dietreco_lowprot"> and eat more protein</string>
+    <string name="enter_username">Enter username</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="username">Username</string>
+
+    <!-- END OF FOOD_PAGE -->
 </resources>

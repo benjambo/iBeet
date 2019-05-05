@@ -34,4 +34,8 @@ public class CalorieNeed {
             }
         }
     }
+
+    public int getAge(){
+        return age;
+    }
 }

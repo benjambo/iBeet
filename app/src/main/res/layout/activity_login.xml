@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
+    android:background="@drawable/backgroundorange"
     tools:context=".LoginActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -31,7 +31,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/loginicon" />
 
     <EditText
         android:id="@+id/username"
@@ -40,7 +41,7 @@
         android:layout_marginTop="40dp"
         android:autofillHints=""
         android:background="@drawable/edit_text_background"
-        android:hint="@string/email_address"
+        android:hint="@string/username"
         android:inputType="textEmailAddress"
         android:padding="16dp"
         android:textColor="@color/white"

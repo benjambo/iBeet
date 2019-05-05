@@ -24,11 +24,11 @@ import android.widget.Toast;
 public class RegisterActivity extends AppCompatActivity {
     private TextView already;
     private Button registerButton;
-    private EditText email, password, name, age;
+    private EditText username, password, name, age;
     private DatabaseSQL db;
     private SharedPreferences myPrefs;
     private RadioGroup toggle;
-    private RadioButton male;
+    private RadioButton male, female;
     private Boolean sex = true;
 
     @Override
@@ -36,11 +36,14 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        email = (EditText) findViewById(R.id.username);
+        TimeCalculator.getInstance().updateDate(this);
+
+        username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         name = (EditText) findViewById(R.id.nameText);
         age = (EditText) findViewById(R.id.ageText);
         male = (RadioButton) findViewById(R.id.radioButtonMale);
+        female = (RadioButton) findViewById(R.id.radioButtonFemale);
 
         myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
 
@@ -51,26 +54,48 @@ public class RegisterActivity extends AppCompatActivity {
                 //inserting registered accounts to database
                 db=new DatabaseSQL(RegisterActivity.this);
 
-                //Adding users email and password to database
-                db.addUser(new User(email.getText().toString(), password.getText().toString()));
+                //Adding users name and password to database
+                /*
+                db.addUser(new User(username.getText().toString(), password.getText().toString()));
+                */
+
+                //Version.2
+                //Add new user to database and send instance var to Calculator
+                User user = new User(username.getText().toString(), password.getText().toString());
+                db.addUser(user);
 
                 //Get text
                 String names = name.getText().toString();
+                String usernames = username.getText().toString();
+                String passwords = password.getText().toString();
                 String ages = age.getText().toString();
-                String gender = male.getText().toString(); //Make it work
+                String gender = sex.toString();
 
                 //Saving name, age and sex to shared preferences
-                myPrefs = getSharedPreferences(" com.example.ibeet.DATES", Context.MODE_PRIVATE);
+                myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.putString("nameKey", names);
-                editor.putInt("ageKey", Integer.parseInt(ages));
-                editor.putBoolean("sexKey", Boolean.valueOf(gender)); // Doesnt work right
+                editor.putString("userKey", usernames);
+                editor.putString("passKey", passwords);
+                editor.putString("ageKey", ages);
+                editor.putBoolean("sexKey", Boolean.valueOf(gender));
                 editor.apply();
 
-                Log.d("KOOL", "works: " + ages + names + gender);
+                Log.d("KOOL", "works: " + names + " " + ages + " " + gender);
 
-                Intent mainActivity = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(mainActivity);
+                if (name.getText().toString().trim().equals("") ||
+                        username.getText().toString().trim().equals("") ||
+                        password.getText().toString().trim().equals("") ||
+                        age.getText().toString().trim().equals("")){
+                    Toast.makeText(getBaseContext(),"Please Fill in All the Input Fields", Toast.LENGTH_LONG).show();
+                }else{
+                    //perform init for food database
+                    CaloriesCalculator.getInstance().writeEmptyIntoDb(RegisterActivity.this);
+
+                    //do what you want with the entered text
+                    Intent mainActivity = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(mainActivity);
+                }
             }
         });
 
