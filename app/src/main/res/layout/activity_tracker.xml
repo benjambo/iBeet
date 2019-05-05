@@ -5,15 +5,14 @@
     android:background="@drawable/backgroundorange"
     android:orientation="vertical">
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".TrackerActivity"
-    />
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".TrackerActivity" />
 
     <Button
         android:id="@+id/buttoncenter"
@@ -28,5 +27,31 @@
         android:padding="8dp"
         android:text="@string/where_am_i"
         android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/totaldistance"
+        android:layout_width="310dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/map"
+        android:layout_alignBottom="@+id/map"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="506dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="118dp" />
+
+    <TextView
+        android:id="@+id/averagespeed"
+        android:layout_width="310dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/map"
+        android:layout_alignBottom="@+id/map"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="544dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="80dp" />
 
 </RelativeLayout>

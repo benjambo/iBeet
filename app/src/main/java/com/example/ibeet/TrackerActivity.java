@@ -8,14 +8,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,6 +33,9 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     Marker currentPosMarker;
     LocationManager locationManager;
     private Button center;
+    private TextView totalDist;
+    private TextView avSpd;
+    MarkerHandler beenLocats= new MarkerHandler();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -47,6 +49,9 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mo = new MarkerOptions().position(new LatLng(0,0)).title("My Current Location");
         requestLocation();
+        totalDist = findViewById(R.id.totaldistance);
+        avSpd = findViewById(R.id.averagespeed);
+
     }
 
 
@@ -72,15 +77,15 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onLocationChanged(Location location) {
-
         final LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
         //marker is the current position of the device
+        //Reset current position
         currentPosMarker.setPosition(myCoordinates);
-        //MarkerHandler.getInstance().setNewMarker(myCoordinates);
-        mMap.addMarker(new MarkerOptions().position(myCoordinates).title("olin tässä aiemmin").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
+        //Leave a custom marker at recent location
+        mMap.addMarker(new MarkerOptions().position(myCoordinates).title("I have been here").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
 
-        //Call
-        MarkerHandler.getInstance().setNewMarker(location);
+        //Call for distance calculation
+        beenLocats.setNewMarker(location);
 
         //Button to center view on the current location
         center = findViewById(R.id.buttoncenter);
@@ -91,9 +96,11 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myCoordinates, zoomlvl));
             }
         });
-        Log.d("amount of beenLocations", String.valueOf(MarkerHandler.getInstance().beenLocations.size()));
 
+        totalDist.setText(beenLocats.getTotalDistance());
+        avSpd.setText(beenLocats.getAverageSpeed());
     }
+
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {

@@ -1,6 +1,7 @@
 package com.example.ibeet;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -9,22 +10,42 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 class MarkerHandler {
-    private static final MarkerHandler ourInstance = new MarkerHandler();
+    ArrayList<Location> beenLocations;
+    private Location locat;
+    private Float lastDistanceDiff;
+    private Float totalDistanceTravelled;
+    private Float averageSpeed;
 
-    ArrayList<MarkerOptions> beenLocations;
+    int currentIndex;
 
-    static MarkerHandler getInstance() {
-        return ourInstance;
-    }
-
-    private MarkerHandler() {
-        beenLocations = new ArrayList<MarkerOptions>();
+    public MarkerHandler() {
+        beenLocations = new ArrayList<>();
+        totalDistanceTravelled = 0.0f;
+        averageSpeed = 0.0f;
+        currentIndex = 0;
     }
 
     //Add a new marker to map. give location in parameters. Marker has custom marker with title "I have been here".
     public void setNewMarker(Location location){
+        //Set location to be stored as LatLng (newLocat) to ass marker
         LatLng newLocat = new LatLng(location.getLatitude(), location.getLongitude());
-
-        beenLocations.add(new MarkerOptions().position(newLocat).title("I have been here").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
+        //Store location as Location for distance calculations
+        beenLocations.add(location);
+        //Distance calculation
+        if (currentIndex ==0){ } else {
+            lastDistanceDiff = location.distanceTo(beenLocations.get(currentIndex-1));
+            totalDistanceTravelled += lastDistanceDiff;
+        }
+        averageSpeed = totalDistanceTravelled / (currentIndex*10);
+        currentIndex++;
     }
+
+    public String getTotalDistance(){
+        return "Distance travelled today: " + String.valueOf(totalDistanceTravelled) + " m";
+    }
+
+    public String getAverageSpeed(){
+        return "Average speed today: " + String.valueOf(averageSpeed) + " m/s";
+    }
+
 }
