@@ -33,9 +33,9 @@ private Toast backToast;
 
         TimeCalculator.getInstance().updateDate(this);
 
-        uname = (EditText) findViewById(R.id.username);
-        pswd = (EditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.btn_login);
+        uname = findViewById(R.id.username);
+        pswd = findViewById(R.id.password);
+        login = findViewById(R.id.btn_login);
 
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", false);
@@ -66,7 +66,7 @@ private Toast backToast;
 
         db=new DatabaseSQL(LoginActivity.this);
 
-        register = (TextView) findViewById(R.id.register);
+        register = findViewById(R.id.register);
 
         String text = "Register here";
 
@@ -101,10 +101,9 @@ private Toast backToast;
 
     @Override
     public void onBackPressed() {
-        /**
-         * Setting back button to not to respond on first click
-         * and on second click to exit the app on mainpage!!!
-         */
+
+         /*Setting back button to not to respond on first click
+         and on second click to exit the app on mainpage!!!*/
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel();
             Intent exitApp = new Intent(Intent.ACTION_MAIN);

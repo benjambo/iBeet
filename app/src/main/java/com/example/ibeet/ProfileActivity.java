@@ -19,18 +19,20 @@ private SharedPreferences prefs;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        username = (TextView) findViewById(R.id.userName);
-        age = (TextView) findViewById(R.id.ageDisplay);
-        logout = (Button) findViewById(R.id.logoutBtn);
+        username = findViewById(R.id.userName);
+        age = findViewById(R.id.ageDisplay);
+        logout = findViewById(R.id.logoutBtn);
 
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
 
+        //GETTING USERS NAME AND AGE FROM SHARED PREFERENCES
         String user = prefs.getString("nameKey", "Login");
         String ages = prefs.getString("ageKey", "to see");
 
         username.setText(user);
         age.setText(ages);
 
+        //ON CLICK LOGS OUT OF PROFILE
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,15 +46,5 @@ private SharedPreferences prefs;
                 finish();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", false);
-        editor.commit();
     }
 }
