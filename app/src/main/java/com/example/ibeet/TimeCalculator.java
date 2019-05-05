@@ -36,6 +36,11 @@ class TimeCalculator {
         editor_date = preferences_dates.edit();
         date = new Date(); tz = TimeZone.getDefault();
 
+        //When registering drop prior prefs
+        if(context instanceof RegisterActivity){
+            editor_date.clear();
+        }
+
         //if FIRST_DATE is set, if not set it.
         //else set CURRENT_DATE.
         if(preferences_dates.contains("FIRST_DATE")){
