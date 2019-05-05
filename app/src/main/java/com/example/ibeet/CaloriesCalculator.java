@@ -91,11 +91,9 @@ class CaloriesCalculator {
         FoodListGenerator foodListGenerator = new FoodListGenerator();
         calorieNeeds = foodListGenerator.getList();
         nutritionalCollection = new ArrayList<>();
-
         for(int i=0;i<7;i++){
             nutritionalCollection.add(new double[]{0, 0, 0, 0});
         }
-
     }
 
     /**
@@ -245,7 +243,7 @@ class CaloriesCalculator {
         String user = prefs.getString("userKey", "");
 
         DatabaseSQL myDB = new DatabaseSQL(context);
-        myDB.setFoodStatsTable(user, nutritionalCollection, getDaysResults());
+        myDB.setFoodStatsTable(user, nutritionalCollection);
         myDB.close();
     }
 

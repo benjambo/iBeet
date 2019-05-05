@@ -49,16 +49,20 @@
     <string name="cal_week_comp_exception">No weekly comparison due to account being less than day old</string>
 
     <string name="dietreco_neutral">You are doing well with your dietary balance!</string>
+    <string name="dietreco_null">Just eat something and we will work from there</string>
     <string name="dietreco_highcarb">You might want to lessen your carbohydrate intake</string>
     <string name="dietreco_highfat">You might want to limit your fats intake</string>
     <string name="dietreco_highprot">You might want to lessen your protein intake</string>
-    <string name="dietreco_lowcarb"> and eat more carbohydrates</string>
-    <string name="dietreco_lowfat"> and eat some fats</string>
-    <string name="dietreco_lowprot"> and eat more protein</string>
+
+    <string name="dietreco_lowcarb">\n and eat more carbohydrates</string>
+    <string name="dietreco_lowfat">\n and eat some fats</string>
+    <string name="dietreco_lowprot">\n and eat more protein</string>
+    <!-- END OF FOODPAGE -->
+
+
     <string name="enter_username">Enter username</string>
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="username">Username</string>
 
-    <!-- END OF FOOD_PAGE -->
 </resources>

@@ -39,63 +39,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="124dp"
             android:background="@drawable/button_background"
-            android:textColor="@color/login"
-            android:textAllCaps="false"
             android:text="@string/new_meal"
+            android:textAllCaps="false"
+            android:textColor="@color/login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-            app:layout_constraintVertical_bias="0.275" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/caloriesWeekText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:text="Your Calories this week :"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.448"
-            app:layout_constraintStart_toEndOf="@+id/caloriesNowText"
+            app:layout_constraintStart_toStartOf="@+id/newPlate"
             app:layout_constraintTop_toBottomOf="@+id/newPlate"
-            app:layout_constraintVertical_bias="0.24" />
+            app:layout_constraintVertical_bias="0.235" />
 
         <TextView
             android:id="@+id/caloriesNowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="56dp"
             android:text="Your Calories today :"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.176"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/newPlate"
             app:layout_constraintTop_toBottomOf="@+id/newPlate"
             app:layout_constraintVertical_bias="0.235" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="0dp"
-            android:layout_height="427dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="466dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/newPlate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.003"
             tools:visibility="visible">
 
             <TextView
@@ -110,41 +102,26 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/caloriesWeekComp"
-                app:layout_constraintVertical_bias="0.342" />
-
-            <TextView
-                android:id="@+id/reco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="recommend"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dietReco"
-                app:layout_constraintVertical_bias="0.202" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.705" />
 
             <TextView
                 android:id="@+id/caloriesDayComp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="placeholder"
-                android:textSize="16sp"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/dietReco"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.283" />
+                app:layout_constraintVertical_bias="0.288" />
 
             <TextView
                 android:id="@+id/caloriesWeekComp"
@@ -157,11 +134,12 @@
                 android:text="placeholder"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/dietReco"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/caloriesDayComp"
-                app:layout_constraintVertical_bias="0.099" />
+                app:layout_constraintVertical_bias="0.417" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
