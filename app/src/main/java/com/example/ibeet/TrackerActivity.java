@@ -19,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,7 +45,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        mo = new MarkerOptions().position(new LatLng(0,0)).title("My Current Location");
+        mo = new MarkerOptions().position(new LatLng(0,0)).title("My Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker));
         requestLocation();
     }
 
@@ -75,9 +76,9 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         final LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
         marker.setPosition(myCoordinates);
         //MarkerHandler.getInstance().setNewMarker(myCoordinates);
-        //mMap.addMarker(new MarkerOptions().position(myCoordinates).title("olin tässä aijemmin"));
+        mMap.addMarker(new MarkerOptions().position(myCoordinates).title("olin tässä aijemmin"));
 
-        //yeet
+
         //Button to center view on the current location
         center = findViewById(R.id.buttoncenter);
         center.setOnClickListener(new View.OnClickListener() {
