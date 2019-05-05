@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -29,9 +30,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap;
-    private int markerCount = 0;
     MarkerOptions mo;
-    Marker marker;
+    Marker currentPosMarker;
     LocationManager locationManager;
     private Button center;
 
@@ -45,7 +45,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        mo = new MarkerOptions().position(new LatLng(0,0)).title("My Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker));
+        mo = new MarkerOptions().position(new LatLng(0,0)).title("My Current Location");
         requestLocation();
     }
 
@@ -62,7 +62,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        marker = mMap.addMarker(mo);
+        currentPosMarker = mMap.addMarker(mo);
 
         // Add a marker over Metropolia and move the camera
         LatLng metropolia = new LatLng(60.258617, 24.844468);
@@ -74,11 +74,13 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     public void onLocationChanged(Location location) {
 
         final LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
-        marker.setPosition(myCoordinates);
+        //marker is the current position of the device
+        currentPosMarker.setPosition(myCoordinates);
         //MarkerHandler.getInstance().setNewMarker(myCoordinates);
-        mMap.addMarker(new MarkerOptions().position(myCoordinates).title("olin tässä aijemmin"));
+        mMap.addMarker(new MarkerOptions().position(myCoordinates).title("olin tässä aiemmin").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
 
-        //yyeeeet
+        //Call
+        MarkerHandler.getInstance().setNewMarker(location);
 
         //Button to center view on the current location
         center = findViewById(R.id.buttoncenter);
@@ -89,7 +91,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myCoordinates, zoomlvl));
             }
         });
-
+        Log.d("amount of beenLocations", String.valueOf(MarkerHandler.getInstance().beenLocations.size()));
 
     }
 
