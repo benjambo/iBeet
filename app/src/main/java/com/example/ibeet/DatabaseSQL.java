@@ -161,6 +161,7 @@ public class DatabaseSQL extends SQLiteOpenHelper {
          */
     }
 
+
     /**
      * Fetch stats to put up in the app
      * @param user : String

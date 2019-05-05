@@ -46,7 +46,7 @@
     <string name="cal_week_comp_verylow">You are way behind your weekly calories balance: </string>
     <string name="cal_week_comp_high">You are going a bit over your weekly calories balance: </string>
     <string name="cal_week_comp_veryhigh">You are way over your weekly calories balance: </string>
-    <string name="cal_week_comp_exception">No weekly comparison due to account being less than day old</string>
+    <string name="cal_week_comp_exception">No weekly comparison due to account being less than week old</string>
 
     <string name="dietreco_neutral">You are doing well with your dietary balance!</string>
     <string name="dietreco_null">Just eat something and we will work from there</string>

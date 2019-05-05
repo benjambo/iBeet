@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseSQL db;
     private SharedPreferences myPrefs;
     private RadioGroup toggle;
-    private RadioButton male, female;
     private Boolean sex = true;
 
     @Override
@@ -36,28 +35,19 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        TimeCalculator.getInstance().updateDate(this);
-
-        username = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.password);
-        name = (EditText) findViewById(R.id.nameText);
-        age = (EditText) findViewById(R.id.ageText);
-        male = (RadioButton) findViewById(R.id.radioButtonMale);
-        female = (RadioButton) findViewById(R.id.radioButtonFemale);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        name = findViewById(R.id.nameText);
+        age = findViewById(R.id.ageText);
 
         myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
 
-        registerButton = (Button) findViewById(R.id.btn_register);
+        registerButton = findViewById(R.id.btn_register);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //inserting registered accounts to database
                 db=new DatabaseSQL(RegisterActivity.this);
-
-                //Adding users name and password to database
-                /*
-                db.addUser(new User(username.getText().toString(), password.getText().toString()));
-                */
 
                 //Version.2
                 //Add new user to database and send instance var to Calculator
@@ -70,6 +60,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String passwords = password.getText().toString();
                 String ages = age.getText().toString();
                 String gender = sex.toString();
+
+                //When Registering following method also clears prior prefs
+                TimeCalculator.getInstance().updateDate(RegisterActivity.this);
 
                 //Saving name, age and sex to shared preferences
                 myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
@@ -89,12 +82,10 @@ public class RegisterActivity extends AppCompatActivity {
                         age.getText().toString().trim().equals("")){
                     Toast.makeText(getBaseContext(),"Please Fill in All the Input Fields", Toast.LENGTH_LONG).show();
                 }else{
-                    //perform init for food database
-                    //CaloriesCalculator.getInstance().writeEmptyIntoDb(RegisterActivity.this);
-
                     //do what you want with the entered text
                     Intent mainActivity = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(mainActivity);
+                    finish();
                 }
             }
         });
@@ -102,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
 
          //Making a certain area of text clickable!!!!
 
-        already = (TextView) findViewById(R.id.already);
+        already = findViewById(R.id.already);
 
         String text = "Already have an account? Login here";
 
@@ -111,8 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                Intent loginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(loginActivity);
+                finish();
             }
         };
 
@@ -120,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
         already.setText(ss);
         already.setMovementMethod(LinkMovementMethod.getInstance());    //Making text clickable
 
-        toggle = (RadioGroup) findViewById(R.id.radioGroup);
+        toggle = findViewById(R.id.radioGroup);
 
         toggle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("SetTextI18n")

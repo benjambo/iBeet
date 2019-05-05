@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button food;
-    private Button login;
-    private Button mapButton;
+    private Button food, login, mapButton, profile;
     private long backPressedTime;
     private Toast backToast;
 
@@ -48,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(loginActivity);
+            }
+        });
+
+        profile = findViewById(R.id.profileBtn);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent profileActivity = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(profileActivity);
             }
         });
     }

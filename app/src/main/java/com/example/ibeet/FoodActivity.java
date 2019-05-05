@@ -197,10 +197,12 @@ public class FoodActivity extends AppCompatActivity {
             inputLay.setVisibility(View.GONE);
             statisticsLay.setVisibility(View.VISIBLE);
         }
+        /*
         Toast.makeText(FoodActivity.this, "DEBUG: " +
                 "dayrotation: "+ TimeCalculator.getInstance().getDayRotation() +
                 " and compday" + TimeCalculator.getInstance().getComparativeDay(),
                 Toast.LENGTH_LONG).show();
+        */
     }
 
     /**
@@ -267,7 +269,7 @@ public class FoodActivity extends AppCompatActivity {
 
             String fooBar = "\n" + (bar - foo) + "/" + bar;
 
-            if(TimeCalculator.getInstance().getTimeDiffInDays() == 0){
+            if(TimeCalculator.getInstance().getTimeDiffInDays() < 7){
                 return getResources().getString(R.string.cal_week_comp_exception);
             } else if (Math.abs(foo) <= 400) {
                 return getResources().getString(R.string.cal_week_comp_neutral) + fooBar;
