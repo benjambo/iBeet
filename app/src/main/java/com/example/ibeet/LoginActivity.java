@@ -19,12 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-private EditText uname;
-private EditText pswd;
+private EditText uname, pswd;
 private Button login;
 private TextView register;
 private DatabaseSQL db;
 private SharedPreferences prefs;
+private long backPressedTime;
+private Toast backToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +56,9 @@ private SharedPreferences prefs;
                     Toast.makeText(LoginActivity.this,"User Does Not Exist",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(mainActivity);
+
                     finish();
                 }
             }
@@ -94,6 +96,26 @@ private SharedPreferences prefs;
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("firstStart", true);
-        editor.commit();
+        editor.apply();
+    }
+
+    @Override
+    public void onBackPressed() {
+        /**
+         * Setting back button to not to respond on first click
+         * and on second click to exit the app on mainpage!!!
+         */
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            Intent exitApp = new Intent(Intent.ACTION_MAIN);
+            exitApp.addCategory(Intent.CATEGORY_HOME);
+            exitApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(exitApp);
+            return;
+        } else {
+            backToast = Toast.makeText(LoginActivity.this, "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 }
