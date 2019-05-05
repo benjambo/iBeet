@@ -95,6 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //do what you want with the entered text
                     Intent mainActivity = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(mainActivity);
+                    finish();
                 }
             }
         });
@@ -111,8 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                Intent loginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(loginActivity);
+                finish();
             }
         };
 
