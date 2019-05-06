@@ -64,5 +64,9 @@
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="username">Username</string>
+    <string name="age">Age</string>
+    <string name="logout">Logout</string>
+    <string name="user_name">User name</string>
+    <string name="profilepicture">profilepicture</string>
 
 </resources>
