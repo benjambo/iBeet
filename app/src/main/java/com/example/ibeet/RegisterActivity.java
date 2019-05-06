@@ -74,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
                 editor.putBoolean("sexKey", Boolean.valueOf(gender));
                 editor.apply();
 
+                CaloriesCalculator.getInstance().writeIntoFile(RegisterActivity.this, usernames);
+
                 Log.d("KOOL", "works: " + names + " " + ages + " " + gender);
 
                 if (name.getText().toString().trim().equals("") ||

@@ -74,8 +74,9 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food);
 
         //setup Singletons
+        CaloriesCalculator.getInstance().initCalc(this);
         TimeCalculator.getInstance().updateDate(this);
-        CaloriesCalculator.getInstance().setupUser(this);
+        CaloriesCalculator.getInstance().readFromFile(this);
 
         //Init statistics Widgets
         caloriesDayText = findViewById(R.id.caloriesNowText);
@@ -148,13 +149,12 @@ public class FoodActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        CaloriesCalculator.getInstance().writeIntoDB(this);
+        CaloriesCalculator.getInstance().writeIntoFile(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        CaloriesCalculator.getInstance().writeIntoDB(this);
     }
 
     @Override
@@ -197,12 +197,6 @@ public class FoodActivity extends AppCompatActivity {
             inputLay.setVisibility(View.GONE);
             statisticsLay.setVisibility(View.VISIBLE);
         }
-        /*
-        Toast.makeText(FoodActivity.this, "DEBUG: " +
-                "dayrotation: "+ TimeCalculator.getInstance().getDayRotation() +
-                " and compday" + TimeCalculator.getInstance().getComparativeDay(),
-                Toast.LENGTH_LONG).show();
-        */
     }
 
     /**
