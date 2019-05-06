@@ -84,14 +84,11 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //marker is the current position of the device
         //Reset current position
         currentPosMarker.setPosition(myCoordinates);
-        //Leave a custom marker at recent location
-        mMap.addMarker(new MarkerOptions().position(myCoordinates).title("I have been here").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
+
+            //Leave a custom marker at recent location
+            //mMap.addMarker(new MarkerOptions().position(myCoordinates).title("I have been here").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
+
         //Draw line between last location and current location
-
-        /*mMap.addPolyline(new PolylineOptions()
-                .add(new LatLng(location.getLatitude(),location.getLongitude()), new LatLng(0,0))
-                .width(5).color(Color.RED));*/
-
         if(beenLocats.getCurrentIndex()==0){} else {
             mMap.addPolyline(new PolylineOptions()
                     .add(new LatLng(beenLocats.getLocationLat(),beenLocats.getLocationLng()), new LatLng (myCoordinates.latitude, myCoordinates.longitude))
