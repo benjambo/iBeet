@@ -76,6 +76,14 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         mMap.addMarker(new MarkerOptions().position(metropolia).title("Metropolia, here I was made!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(metropolia));
 
+        if (beenLocats.locationsArray.size()<2){} else{
+            for(int i=1; i<=beenLocats.locationsArray.size();i++){
+                mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(beenLocats.locationsArray.get(i).latitude, beenLocats.locationsArray.get(i).longitude),
+                        new LatLng(beenLocats.locationsArray.get(i-1).latitude, beenLocats.locationsArray.get(i-1).longitude))
+                        .width(5).color(Color.GREEN));
+            }
+        }
     }
 
     @Override
