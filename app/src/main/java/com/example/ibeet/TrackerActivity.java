@@ -116,7 +116,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         });
 
         totalDist.setText(beenLocats.getTotalDistance());
-        avSpd.setText(beenLocats.getAverageSpeed());
+        avSpd.setText(beenLocats.deBug());
     }
 
 

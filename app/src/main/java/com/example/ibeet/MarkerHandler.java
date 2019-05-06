@@ -72,4 +72,8 @@ class MarkerHandler {
     public int getCurrentIndex(){
         return currentIndex;
     }
+
+    public String deBug(){
+        return String.valueOf(locationsArray.size());
+    }
 }
