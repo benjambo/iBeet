@@ -15,6 +15,8 @@ class MarkerHandler {
     private Float lastDistanceDiff;
     private Float totalDistanceTravelled;
     private Float averageSpeed;
+    private Double Lat;
+    private Double Lng;
 
     int currentIndex;
 
@@ -24,12 +26,16 @@ class MarkerHandler {
         totalDistanceTravelled = 0.0f;
         averageSpeed = 0.0f;
         currentIndex = 0;
+        Lng = 0d;
+        Lat = 0d;
     }
 
     //Add a new marker to map. give location in parameters. Marker has custom marker with title "I have been here".
     public void setNewMarker(Location location){
         //Set location to be stored as LatLng (newLocat) to ass marker
         LatLng newLocat = new LatLng(location.getLatitude(), location.getLongitude());
+        Lat = location.getLatitude();
+        Lng = location.getLongitude();
         //Store location as LatLng for tracker line drawing
         locationsArray.add(newLocat);
         //Store location as Location for distance calculations
@@ -53,6 +59,14 @@ class MarkerHandler {
 
     public LatLng getLocationLatLng(int Index){
         return locationsArray.get(Index);
+    }
+
+    public Double getLocationLat(){
+        return Lat;
+    }
+
+    public Double getLocationLng(){
+        return Lng;
     }
 
     public int getCurrentIndex(){
