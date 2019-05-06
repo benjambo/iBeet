@@ -39,6 +39,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     private TextView avSpd;
     MarkerHandler beenLocats= new MarkerHandler();
 
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         });
 
         totalDist.setText(beenLocats.getTotalDistance());
-        avSpd.setText(beenLocats.deBug());
+        avSpd.setText(beenLocats.getAverageSpeed());
     }
 
 

@@ -54,7 +54,7 @@ class MarkerHandler {
     }
 
     public String getAverageSpeed(){
-        return "Average speed today: " + String.valueOf(averageSpeed) + " m/s";
+        return "Average speed today: " + String.valueOf(String.format("%.2f",averageSpeed)) + " m/s";
     }
 
     public LatLng getLocationLatLng(int Index){
