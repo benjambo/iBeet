@@ -39,7 +39,7 @@ private SharedPreferences prefs;
                 prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("firstStart", false);
-                editor.apply();
+                editor.commit();
 
                 Intent loginActivity = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(loginActivity);

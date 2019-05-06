@@ -59,10 +59,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -75,6 +78,8 @@ class CaloriesCalculator {
 
     private double plateWeight, vegetablePercentage, meatToCarbsPercentage;
     private double calories, carbGrams, fatGrams, proteinGrams;
+
+    private UserFile myFile;
 
     //Debugging
     //private final static int AGE = 22;
@@ -94,10 +99,21 @@ class CaloriesCalculator {
     private CaloriesCalculator() {
         FoodListGenerator foodListGenerator = new FoodListGenerator();
         calorieNeeds = foodListGenerator.getList();
+
+        //Initialize nutCollection
         nutritionalCollection = new ArrayList<>();
         for(int i=0;i<7;i++){
             nutritionalCollection.add(new double[]{0, 0, 0, 0});
         }
+    }
+
+    public void initCalc(Context context){
+        prefs = context.getSharedPreferences(PREFS_DATES, Context.MODE_PRIVATE);
+
+        String AGEtemp = prefs.getString("ageKey", "20");
+        AGE = Integer.parseInt(AGEtemp);
+
+        GENDER_IS_MALE = prefs.getBoolean("sexKey", true);
     }
 
     /**
@@ -238,66 +254,52 @@ class CaloriesCalculator {
         return 0;
     }
 
-    public void writeIntoFile() {
+    public void readFromFile(Context context) {
         try {
-            FileInputStream door = new FileInputStream("userfiles.sav");
-            ObjectInputStream reader = new ObjectInputStream(door);
-
-        } catch (IOException a) {
+            FileInputStream fis = context.openFileInput("userFile.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            myFile = (UserFile)ois.readObject();
+            fis.close();
+            ois.close();
+        } catch (IOException | ClassNotFoundException a) {
         }
+
+        nutritionalCollection = myFile.getNutList();
     }
 
-    /**
-     * Upon exiting this Activity, store some info in sql database
-     * @param context : Context
-     */
-    public void writeIntoDB(Context context){
+    public void writeIntoFile(Context context){
+
         prefs = context.getSharedPreferences(PREFS_DATES,context.MODE_PRIVATE);
         String user = prefs.getString("userKey", "");
+        myFile.setNutList(nutritionalCollection);
 
-        DatabaseSQL myDB = new DatabaseSQL(context);
-        myDB.setFoodStatsTable(user, nutritionalCollection);
-        myDB.close();
+        try{
+            FileOutputStream fos = context.openFileOutput("userFile.txt", context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(myFile);
+            fos.close();
+            oos.close();
+        } catch (IOException a){ }
     }
 
     /**
-     * Initialize an empty database so we avoid Index outOfBounds errors
-     * @param context : Context
+     *
+     * @param context : Contexr
+     * @param newName : String
      */
-    public void writeEmptyIntoDb(Context context){
-        for(int i=0;i<7;i++){
-            nutritionalCollection.add(new double[]{0, 0, 0, 0});
-        }
-        writeIntoDB(context);
-    }
+    public void writeIntoFile(Context context, String newName){
 
-    /**
-     * Fetch and put up database data
-     * @param context : Context
-     */
-    public void setupUser(Context context){
-        prefs = context.getSharedPreferences(PREFS_DATES, Context.MODE_PRIVATE);
-        String AGE_String = prefs.getString("ageKey", "20");
-        AGE = Integer.parseInt(AGE_String);
-        GENDER_IS_MALE = prefs.getBoolean("sexKey", true);
+        myFile = new UserFile(newName);
+        myFile.initNewUser(newName);
 
-        String user = prefs.getString("userKey", "");
-        DatabaseSQL myDB = new DatabaseSQL(context);
-        double[] statData = myDB.getFoodStatsTable(user);
+        try{
+            FileOutputStream fos = context.openFileOutput("userFile.txt", context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(myFile);
+            fos.close();
+            oos.close();
+        } catch (IOException a){ }
 
-        //Set weekly calories
-        for(int i=0;i<7;i++){
-            nutritionalCollection.set(i,
-                    new double[]{statData[i+3] , 0, 0, 0}
-                    );
-        }
-
-        //set this days all stats
-        for(int i=0;i<4;i++){
-            nutritionalCollection.set(TimeCalculator.getInstance().getDayRotation(),
-                    new double[]{statData[0], statData[1], statData[2], statData[3]}
-            );
-        }
-        myDB.close();
+        nutritionalCollection = myFile.getNutList();
     }
 }
