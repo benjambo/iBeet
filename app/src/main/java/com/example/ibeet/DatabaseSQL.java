@@ -115,6 +115,7 @@ public class DatabaseSQL extends SQLiteOpenHelper {
         return id;
     }
 
+    /*
     /**
      * Update foodstats to SQL
      *   +  Firstdays (calories, carbs, protein, fats )
@@ -129,21 +130,21 @@ public class DatabaseSQL extends SQLiteOpenHelper {
 
         cv.put(Col_1, user);
         //days values
-        cv.put(Col_2, weeksResult.get(currentDay)[0]);
-        cv.put(Col_3, weeksResult.get(currentDay)[1]);
-        cv.put(Col_4, weeksResult.get(currentDay)[2]);
-        cv.put(Col_5, weeksResult.get(currentDay)[3]);
+        cv.put(Col_2, (double)3);//weeksResult.get(currentDay)[0]);
+        cv.put(Col_3, (double)3);//weeksResult.get(currentDay)[1]);
+        cv.put(Col_4, (double)3);//weeksResult.get(currentDay)[2]);
+        cv.put(Col_5, (double)3);//weeksResult.get(currentDay)[3]);
 
         //weeks values
-        cv.put(Col_6, weeksResult.get(0)[0]);
-        cv.put(Col_7, weeksResult.get(1)[0]);
-        cv.put(Col_8, weeksResult.get(2)[0]);
-        cv.put(Col_9, weeksResult.get(3)[0]);
-        cv.put(Col_10, weeksResult.get(4)[0]);
-        cv.put(Col_11, weeksResult.get(5)[0]);
-        cv.put(Col_12, weeksResult.get(6)[0]);
+        cv.put(Col_6, (double)3);//weeksResult.get(0)[0]);
+        cv.put(Col_7, (double)3);//weeksResult.get(1)[0]);
+        cv.put(Col_8, (double)3);//weeksResult.get(2)[0]);
+        cv.put(Col_9, (double)3);//weeksResult.get(3)[0]);
+        cv.put(Col_10, (double)3);//weeksResult.get(4)[0]);
+        cv.put(Col_11, (double)3);//weeksResult.get(5)[0]);
+        cv.put(Col_12, (double)3);//weeksResult.get(6)[0]);
 
-        long resultant = db.update(stats_table, cv, "prime_key_name=?", new String[]{user});
+        long resultant = db.replace(stats_table, null, cv);
         Log.d("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "setFoodStatsTable: " + resultant);
         Log.d("CCCCCCCCCCCCCCCCCCCCCC", "setFoodStatsTable: " +
                 weeksResult.get(0)[0] + " " );
@@ -179,7 +180,7 @@ public class DatabaseSQL extends SQLiteOpenHelper {
         }
         cursor.close();
         */
-
+        /*
         Cursor cursor = db.query(stats_table,
                 null,
                 null,
@@ -190,13 +191,15 @@ public class DatabaseSQL extends SQLiteOpenHelper {
                 null
                 );
 
-        /*
+        */
+
         Cursor cursor = db.rawQuery("SELECT * FROM " + stats_table
                 + " WHERE " + Col_1 + " = " + user, null);
-        */
+
 
         if(cursor != null){
             int i = 0;
+            cursor.moveToFirst();
             while (cursor.moveToNext()){
                 if(i==0){
 

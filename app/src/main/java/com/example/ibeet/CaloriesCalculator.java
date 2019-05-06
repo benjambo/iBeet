@@ -59,6 +59,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -232,6 +236,15 @@ class CaloriesCalculator {
             );}
         }
         return 0;
+    }
+
+    public void writeIntoFile() {
+        try {
+            FileInputStream door = new FileInputStream("userfiles.sav");
+            ObjectInputStream reader = new ObjectInputStream(door);
+
+        } catch (IOException a) {
+        }
     }
 
     /**
