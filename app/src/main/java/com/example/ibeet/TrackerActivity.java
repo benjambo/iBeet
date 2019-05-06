@@ -37,7 +37,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     private Button center;
     private TextView totalDist;
     private TextView avSpd;
-    private Polyline trackerLine;
     MarkerHandler beenLocats= new MarkerHandler();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -86,6 +85,11 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         currentPosMarker.setPosition(myCoordinates);
         //Leave a custom marker at recent location
         mMap.addMarker(new MarkerOptions().position(myCoordinates).title("I have been here").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
+        //Draw line between last location and current location
+        if(beenLocats.getCurrentIndex()==0){} else {
+            mMap.addPolyline(new PolylineOptions().add(beenLocats.getLocationLatLng(beenLocats.getCurrentIndex()), myCoordinates)
+                    .width(5).color(Color.RED));
+        }
         //Call for distance calculation
         beenLocats.setNewMarker(location);
 
