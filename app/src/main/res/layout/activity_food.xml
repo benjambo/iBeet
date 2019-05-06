@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
             android:layout_marginTop="8dp"
-            android:text="@string/your_calories_today"
+            android:text="@string/your_calories_this_week"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -236,7 +236,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ibeetlogofinal" />
+            app:srcCompat="@drawable/ibeetlogofinal"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/sizeText"

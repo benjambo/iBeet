@@ -69,7 +69,6 @@
     <string name="user_name">User name</string>
     <string name="profilepicture">profilepicture</string>
     <string name="your_calories_today">Your Calories Today</string>
-    <string name="your_calories_today">Your Calories Today</string>
     <string name="i_eat_ass">I Eat Ass</string>
     <string name="beeb_boob">BEEB BOOB</string>
     <string name="skibidi">SKIBIDI</string>
@@ -78,5 +77,7 @@
     <string name="carbs">Carbs</string>
     <string name="meat">Meat</string>
     <string name="vegetables">Vegetables</string>
+    <string name="your_calories_this_week">Your calories this week:</string>
+    <string name="todo">TODO</string>
 
 </resources>
