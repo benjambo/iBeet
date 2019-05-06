@@ -53,8 +53,16 @@ class MarkerHandler {
         return "Distance travelled today: " + String.valueOf(String.format("%.2f",totalDistanceTravelled)) + " m";
     }
 
+    public Float getTotalDistanceFloat(){
+        return totalDistanceTravelled;
+    }
+
     public String getAverageSpeed(){
         return "Average speed today: " + String.valueOf(String.format("%.2f",averageSpeed)) + " m/s";
+    }
+
+    public Float getAverageSpeedFloat(){
+        return averageSpeed;
     }
 
     public LatLng getLocationLatLng(int Index){
@@ -73,7 +81,4 @@ class MarkerHandler {
         return currentIndex;
     }
 
-    public String deBug(){
-        return String.valueOf(locationsArray.size());
-    }
 }
