@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
-private TextView username, age;
+private TextView username, age, sessionDistance, sessionSpeed, allTimeDistance, lastSessionSpeed;
 private Button logout;
 private SharedPreferences prefs;
 
@@ -23,6 +23,11 @@ private SharedPreferences prefs;
         age = findViewById(R.id.ageDisplay);
         logout = findViewById(R.id.logoutBtn);
 
+        sessionDistance = findViewById(R.id.thisSessionDistanceView);
+        sessionSpeed = findViewById(R.id.thisSessionAvSpeedView);
+        allTimeDistance = findViewById(R.id.allTimeDistanceView);
+        lastSessionSpeed = findViewById(R.id.lastSessionAvSpeedView);
+
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
 
         //GETTING USERS NAME AND AGE FROM SHARED PREFERENCES
@@ -32,6 +37,16 @@ private SharedPreferences prefs;
         username.setText(user);
         age.setText(ages);
 
+        //USERS TRACKER RECORDS DISPLAYED HERE:
+        float currSesDist = prefs.getFloat("sessionDistanceTravelled",0);
+        float currSesSpeed = prefs.getFloat("thisSessionAverageSpeed", 0);
+        float allDistance = prefs.getFloat("allTimeDistanceTravelled",0);
+        float lastSesSpeed = prefs.getFloat("lastSessionAverageSpeed",0);
+
+        sessionDistance.setText(String.valueOf(currSesDist));
+        sessionSpeed.setText(String.valueOf(currSesSpeed));
+        allTimeDistance.setText(String.valueOf(allDistance));
+        lastSessionSpeed.setText(String.valueOf(lastSesSpeed));
         //ON CLICK LOGS OUT OF PROFILE
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

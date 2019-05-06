@@ -48,8 +48,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
         myPreffs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = myPreffs.edit();
-        Float oldAvSpeed = myPreffs.getFloat("ThisSessionAverageSpeed", 0);
-        editor.putFloat("LastSessionAverageSpeed", oldAvSpeed);
+        float oldAvSpeed = myPreffs.getFloat("ThisSessionAverageSpeed", 0);
+        editor.putFloat("lastSessionAverageSpeed", oldAvSpeed);
 
         setContentView(R.layout.activity_tracker);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -125,7 +125,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         myPreffs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = myPreffs.edit();
-        Float old = myPreffs.getFloat("allTimeDistanceTravelled", 0);
+        float old = myPreffs.getFloat("allTimeDistanceTravelled", 0);
+        editor.putFloat("sessionDistanceTravelled", beenLocats.getTotalDistanceFloat());
         editor.putFloat("allTimeDistanceTravelled", old + beenLocats.getTotalDistanceFloat());
         editor.putFloat("ThisSessionAverageSpeed", beenLocats.getAverageSpeedFloat());
     }
