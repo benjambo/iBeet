@@ -32,7 +32,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/loginicon" />
+        app:srcCompat="@drawable/ibeetlogowhite" />
 
     <EditText
         android:id="@+id/username"
