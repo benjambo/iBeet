@@ -94,7 +94,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
         if(beenLocats.getCurrentIndex()==0){} else {
             mMap.addPolyline(new PolylineOptions()
-                    .add(new LatLng(beenLocats.getLocationLat(),beenLocats.getLocationLng()), new LatLng(1,1))
+                    .add(new LatLng(beenLocats.getLocationLat(),beenLocats.getLocationLng()), new LatLng (myCoordinates.latitude, myCoordinates.longitude))
                     .width(5).color(Color.RED));
         }
         //Call for distance calculation yeet
