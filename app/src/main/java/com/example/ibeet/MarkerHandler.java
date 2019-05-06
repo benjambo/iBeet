@@ -20,6 +20,7 @@ class MarkerHandler {
 
     public MarkerHandler() {
         beenLocations = new ArrayList<>();
+        locationsArray = new ArrayList<>();
         totalDistanceTravelled = 0.0f;
         averageSpeed = 0.0f;
         currentIndex = 0;
