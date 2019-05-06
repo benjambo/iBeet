@@ -48,8 +48,9 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
         myPreffs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = myPreffs.edit();
-        float oldAvSpeed = myPreffs.getFloat("ThisSessionAverageSpeed", 0);
+        float oldAvSpeed = myPreffs.getFloat("thisSessionAverageSpeed", 0);
         editor.putFloat("lastSessionAverageSpeed", oldAvSpeed);
+        editor.commit();
 
         setContentView(R.layout.activity_tracker);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -128,7 +129,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         float old = myPreffs.getFloat("allTimeDistanceTravelled", 0);
         editor.putFloat("sessionDistanceTravelled", beenLocats.getTotalDistanceFloat());
         editor.putFloat("allTimeDistanceTravelled", old + beenLocats.getTotalDistanceFloat());
-        editor.putFloat("ThisSessionAverageSpeed", beenLocats.getAverageSpeedFloat());
+        editor.putFloat("thisSessionAverageSpeed", beenLocats.getAverageSpeedFloat());
+        editor.commit();
     }
 
     @Override
@@ -153,7 +155,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         criteria.setPowerRequirement(criteria.POWER_HIGH);
         String provider = locationManager.getBestProvider(criteria, true);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)

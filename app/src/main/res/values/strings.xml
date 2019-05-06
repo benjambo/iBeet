@@ -79,5 +79,9 @@
     <string name="vegetables">Vegetables</string>
     <string name="your_calories_this_week">Your calories this week:</string>
     <string name="todo">TODO</string>
+    <string name="average_speed_this_session">Average Speed This Session:</string>
+    <string name="distance_travel_this_session">Distance Travel This Session:</string>
+    <string name="distance_travelled_all_time">Distance Travelled All Time:</string>
+    <string name="average_speed_last_session">Average Speed Last Session:</string>
 
 </resources>
