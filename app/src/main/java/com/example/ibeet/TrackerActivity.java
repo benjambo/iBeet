@@ -2,6 +2,7 @@ package com.example.ibeet;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -23,7 +24,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -35,6 +37,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     private Button center;
     private TextView totalDist;
     private TextView avSpd;
+    private Polyline trackerLine;
     MarkerHandler beenLocats= new MarkerHandler();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -83,7 +86,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         currentPosMarker.setPosition(myCoordinates);
         //Leave a custom marker at recent location
         mMap.addMarker(new MarkerOptions().position(myCoordinates).title("I have been here").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
-
+        //Draw line between last location and current location
+        trackerLine = mMap.addPolyline(new PolylineOptions().add(beenLocats.getLocationLatLng(beenLocats.currentIndex), myCoordinates).width(5).color(Color.BLUE));
         //Call for distance calculation
         beenLocats.setNewMarker(location);
 

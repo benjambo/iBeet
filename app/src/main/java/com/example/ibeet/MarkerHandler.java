@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 class MarkerHandler {
     ArrayList<Location> beenLocations;
-    private Location locat;
+    ArrayList<LatLng> locationsArray;
     private Float lastDistanceDiff;
     private Float totalDistanceTravelled;
     private Float averageSpeed;
@@ -29,6 +29,8 @@ class MarkerHandler {
     public void setNewMarker(Location location){
         //Set location to be stored as LatLng (newLocat) to ass marker
         LatLng newLocat = new LatLng(location.getLatitude(), location.getLongitude());
+        //Store location as LatLng for tracker line drawing
+        locationsArray.add(newLocat);
         //Store location as Location for distance calculations
         beenLocations.add(location);
         //Distance calculation
@@ -48,4 +50,11 @@ class MarkerHandler {
         return "Average speed today: " + String.valueOf(averageSpeed) + " m/s";
     }
 
+    public LatLng getLocationLatLng(int Index){
+        return locationsArray.get(Index);
+    }
+
+    public int getCurrentIndex(){
+        return currentIndex;
+    }
 }
