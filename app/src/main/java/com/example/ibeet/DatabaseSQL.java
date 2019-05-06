@@ -8,9 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import java.util.ArrayList;
 
 
 public class DatabaseSQL extends SQLiteOpenHelper {
@@ -20,7 +17,7 @@ public class DatabaseSQL extends SQLiteOpenHelper {
     //Database Name
     private static final String Db_Name="users";
 
-    //Table name
+    //Table userName
     private static final String Table_Name="user";
 
     private static final String stats_table ="Food_stats_table";
@@ -30,20 +27,6 @@ public class DatabaseSQL extends SQLiteOpenHelper {
     private static final String User_name="name";
     private static final String User_password="password";
 
-    //Store all nutritional data from current day
-    //Store calories from last seven days
-    private static final String Col_1 = "prime_key_name";
-    private static final String Col_2 ="first";
-    private static final String Col_3 ="second";
-    private static final String Col_4 ="third";
-    private static final String Col_5 ="fourth";
-    private static final String Col_6 ="calsDayOne";
-    private static final String Col_7 ="calsDayTwo";
-    private static final String Col_8 ="calsDayThree";
-    private static final String Col_9 ="calsDayFour";
-    private static final String Col_10 ="calsDayfive";
-    private static final String Col_11 ="clasDaySix";
-    private static final String Col_12 ="calDaySeven";
 
     public DatabaseSQL(Context context)
     {
@@ -76,7 +59,7 @@ public class DatabaseSQL extends SQLiteOpenHelper {
         ContentValues cv=new ContentValues();
 
         // cv.put(User_id,usr.getId());
-        cv.put(User_name,usr.getName());
+        cv.put(User_name,usr.getUserName());
         cv.put(User_password,usr.getPassword());
 
         //Inserting row
@@ -89,7 +72,7 @@ public class DatabaseSQL extends SQLiteOpenHelper {
     {
         int id=-1;
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.rawQuery("SELECT id FROM user WHERE name=? AND password=?",new String[]{us.getName(),us.getPassword()});
+        Cursor cursor=db.rawQuery("SELECT id FROM user WHERE name=? AND password=?",new String[]{us.getUserName(),us.getPassword()});
         if(cursor.getCount()>0) {
             cursor.moveToFirst();
             id=cursor.getInt(0);

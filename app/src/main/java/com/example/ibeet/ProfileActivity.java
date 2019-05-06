@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.File;
+
 public class ProfileActivity extends AppCompatActivity {
 private TextView username, age, sessionDistance, sessionSpeed, allTimeDistance, lastSessionSpeed;
 private Button logout;
@@ -61,5 +63,11 @@ private SharedPreferences prefs;
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FileHandler.getInstance().writeFile(this);
     }
 }

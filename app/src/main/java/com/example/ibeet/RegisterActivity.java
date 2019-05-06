@@ -49,10 +49,14 @@ public class RegisterActivity extends AppCompatActivity {
                 //inserting registered accounts to database
                 db=new DatabaseSQL(RegisterActivity.this);
 
+                /*
                 //Version.2
                 //Add new user to database and send instance var to Calculator
+                //DELETE
+                //NEW VERSION BELOW IN ELSE STATEMENT
                 User user = new User(username.getText().toString(), password.getText().toString());
                 db.addUser(user);
+                */
 
                 //Get text
                 String names = name.getText().toString();
@@ -64,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //When Registering following method also clears prior prefs
                 TimeCalculator.getInstance().updateDate(RegisterActivity.this);
 
-                //Saving name, age and sex to shared preferences
+                //Saving userName, age and sex to shared preferences
                 myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.putString("nameKey", names);
@@ -72,11 +76,17 @@ public class RegisterActivity extends AppCompatActivity {
                 editor.putString("passKey", passwords);
                 editor.putString("ageKey", ages);
                 editor.putBoolean("sexKey", Boolean.valueOf(gender));
-                editor.apply();
+                editor.commit();
 
-                CaloriesCalculator.getInstance().writeIntoFile(RegisterActivity.this, usernames);
+                //Add new user to database
+                User user = new User(usernames, passwords, names, ages, Boolean.valueOf(gender));
+                db.addUser(user);
 
-                Log.d("KOOL", "works: " + names + " " + ages + " " + gender);
+                //Add new user to UserFile
+
+                FileHandler.getInstance().readUserFile(RegisterActivity.this).addUser(user);
+
+                Log.d("KOOL", "works: " + usernames + " " + ages + " " + gender);
 
                 if (name.getText().toString().trim().equals("") ||
                         username.getText().toString().trim().equals("") ||

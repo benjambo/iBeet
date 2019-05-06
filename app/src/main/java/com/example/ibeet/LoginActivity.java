@@ -41,6 +41,10 @@ private Toast backToast;
         boolean firstStart = prefs.getBoolean("firstStart", false);
 
         if (firstStart) {
+
+            //we activate a specific user from storage
+            FileHandler.getInstance().readUserFile(this);
+
             Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(mainActivity);
         }
@@ -96,7 +100,7 @@ private Toast backToast;
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("firstStart", true);
-        editor.apply();
+        editor.commit();
     }
 
     @Override
