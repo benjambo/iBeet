@@ -90,7 +90,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
             mMap.addPolyline(new PolylineOptions().add(beenLocats.getLocationLatLng(beenLocats.getCurrentIndex()), myCoordinates)
                     .width(5).color(Color.RED));
         }
-        //Call for distance calculation
+        //Call for distance calculation yeet
         beenLocats.setNewMarker(location);
 
         //Button to center view on the current location
