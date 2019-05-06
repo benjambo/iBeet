@@ -50,7 +50,7 @@ class MarkerHandler {
     }
 
     public String getTotalDistance(){
-        return "Distance travelled today: " + String.valueOf(totalDistanceTravelled) + " m";
+        return "Distance travelled today: " + String.valueOf(String.format("%.2f",totalDistanceTravelled)) + " m";
     }
 
     public String getAverageSpeed(){
