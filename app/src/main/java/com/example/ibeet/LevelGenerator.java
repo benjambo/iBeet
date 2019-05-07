@@ -45,4 +45,4 @@ public class LevelGenerator {
     public int getCurrentLevel(){
         return currentLevel;
     }
-}
+}//VERSION 1.0
