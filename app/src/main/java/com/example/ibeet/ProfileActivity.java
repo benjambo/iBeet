@@ -5,14 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
-private TextView username, age, sessionDistance, sessionSpeed, allTimeDistance, lastSessionSpeed;
+private TextView username, age, sessionDistance, sessionSpeed, allTimeDistance, lastSessionSpeed, levelViewer;
 private Button logout;
 private SharedPreferences prefs;
+LevelGenerator levelGenerator = new LevelGenerator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ private SharedPreferences prefs;
         sessionSpeed = findViewById(R.id.thisSessionAvSpeedView);
         allTimeDistance = findViewById(R.id.allTimeDistanceView);
         lastSessionSpeed = findViewById(R.id.lastSessionAvSpeedView);
+        levelViewer = findViewById(R.id.levelView);
 
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
 
@@ -37,16 +40,25 @@ private SharedPreferences prefs;
         username.setText(user);
         age.setText(ages);
 
-        //USERS TRACKER RECORDS DISPLAYED HERE:
+        //USER LEVEL
+        levelGenerator.setTotalXp((int) prefs.getFloat("allTimeDistanceTravelled", 0));
+        levelGenerator.calculateNewLevel();
+
+        //USERS TRACKER RECORDS AND LEVEL DISPLAYS HERE:
         float currSesDist = prefs.getFloat("sessionDistanceTravelled",0);
         float currSesSpeed = prefs.getFloat("thisSessionAverageSpeed", 0);
         float allDistance = prefs.getFloat("allTimeDistanceTravelled",0);
         float lastSesSpeed = prefs.getFloat("lastSessionAverageSpeed",0);
+        int userLevel = levelGenerator.getCurrentLevel();
 
         sessionDistance.setText(String.valueOf(currSesDist));
         sessionSpeed.setText(String.valueOf(currSesSpeed));
         allTimeDistance.setText(String.valueOf(allDistance));
         lastSessionSpeed.setText(String.valueOf(lastSesSpeed));
+        levelViewer.setText(String.valueOf(userLevel));
+
+        Log.d("Current level", String.valueOf(levelGenerator.getCurrentLevel()));
+
         //ON CLICK LOGS OUT OF PROFILE
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

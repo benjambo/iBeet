@@ -83,5 +83,6 @@
     <string name="distance_travel_this_session">Distance Travel This Session:</string>
     <string name="distance_travelled_all_time">Distance Travelled All Time:</string>
     <string name="average_speed_last_session">Average Speed Last Session:</string>
+    <string name="textview">TextView</string>
 
 </resources>
