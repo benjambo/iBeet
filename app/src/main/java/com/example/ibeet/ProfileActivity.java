@@ -40,7 +40,7 @@ LevelGenerator levelGenerator = new LevelGenerator();
         username.setText(user);
         age.setText(ages);
 
-        //USER LEVEL
+        //USER LEVEL VERSION 1.0
         levelGenerator.setTotalXp((int) prefs.getFloat("allTimeDistanceTravelled", 0));
         levelGenerator.calculateNewLevel();
 
