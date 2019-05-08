@@ -42,7 +42,9 @@ LevelGenerator levelGenerator = new LevelGenerator();
 
         //USER LEVEL VERSION 1.0
         levelGenerator.setTotalXp((int) prefs.getFloat("allTimeDistanceTravelled", 0));
+        Log.d("Kokonaismatka",String.valueOf(prefs.getFloat("allTimeDistanceTravelled", 0)));
         levelGenerator.calculateNewLevel();
+        Log.d("Current level", String.valueOf(levelGenerator.getCurrentLevel()));
 
         //USERS TRACKER RECORDS AND LEVEL DISPLAYS HERE:
         float currSesDist = prefs.getFloat("sessionDistanceTravelled",0);
@@ -56,8 +58,6 @@ LevelGenerator levelGenerator = new LevelGenerator();
         allTimeDistance.setText(String.valueOf(allDistance));
         lastSessionSpeed.setText(String.valueOf(lastSesSpeed));
         levelViewer.setText(String.valueOf(userLevel));
-
-        Log.d("Current level", String.valueOf(levelGenerator.getCurrentLevel()));
 
         //ON CLICK LOGS OUT OF PROFILE
         logout.setOnClickListener(new View.OnClickListener() {

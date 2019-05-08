@@ -1,6 +1,7 @@
 package com.example.ibeet;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class LevelGenerator {
     int currentLevel;
@@ -10,14 +11,11 @@ public class LevelGenerator {
     MarkerHandler markerHandler = new MarkerHandler();
 
     public LevelGenerator(){
-        totalXp = 0;
-        currentLevel = 0;
         neededXp = 200;
-        currentXp = totalXp - neededXp;
     }
 
-    public void calculateNewLevel(){
-        while (currentXp>neededXp){
+    public void calculateNewLevel() {
+        while (currentXp > neededXp){
             isEnoughXp();
             getXpNeeded();
             resetCurrentXp();
@@ -35,11 +33,12 @@ public class LevelGenerator {
     }
 
     public void resetCurrentXp(){
-        currentXp = totalXp - neededXp;
+        currentXp = currentXp - neededXp;
     }
 
     public void setTotalXp(int totalDist){
         this.totalXp = totalDist;
+        currentXp = totalXp;
     }
 
     public int getCurrentLevel(){

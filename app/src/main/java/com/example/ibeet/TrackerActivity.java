@@ -74,6 +74,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         LatLng metropolia = new LatLng(60.258617, 24.844468);
         mMap.addMarker(new MarkerOptions().position(metropolia).title("Metropolia, here I was made!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(metropolia));
+
+
 /*      This can be used later to draw recent locations. NOTE: storing beenlocats.locationsArray is needed.
         if (beenLocats.locationsArray.size()<2){} else{
             for(int i=1; i<=beenLocats.locationsArray.size();i++){

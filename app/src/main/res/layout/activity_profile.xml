@@ -163,14 +163,23 @@
 
     <TextView
         android:id="@+id/levelView"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="59dp"
+        android:layout_height="31dp"
         android:text="@string/textview"
         app:layout_constraintBottom_toBottomOf="@+id/profileImage"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.64"
         app:layout_constraintStart_toEndOf="@+id/profileImage"
-        app:layout_constraintTop_toTopOf="@+id/profileImage" />
+        app:layout_constraintTop_toTopOf="@+id/profileImage"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="52dp"
+        android:layout_height="27dp"
+        android:text="Level"
+        app:layout_constraintBottom_toBottomOf="@+id/levelView"
+        app:layout_constraintEnd_toStartOf="@+id/levelView"
+        app:layout_constraintStart_toEndOf="@+id/profileImage"
+        app:layout_constraintTop_toTopOf="@+id/levelView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
