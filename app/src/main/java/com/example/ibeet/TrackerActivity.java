@@ -2,6 +2,7 @@ package com.example.ibeet;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,10 +12,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
@@ -26,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -62,6 +67,13 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         requestLocation();
         totalDist = findViewById(R.id.totaldistance);
         avSpd = findViewById(R.id.averagespeed);
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        Menu menu = bottomNav.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
 
     }
 
@@ -167,5 +179,28 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         locationManager.requestLocationUpdates(provider, 10000, 10, this);
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+
+                        case R.id.nav_food:
+                            Intent foodActivity = new Intent(TrackerActivity.this, FoodActivity.class);
+                            startActivity(foodActivity);
+                            break;
+
+                        case R.id.nav_profile:
+                            Intent profileActivity = new Intent(TrackerActivity.this, ProfileActivity.class);
+                            startActivity(profileActivity);
+                            break;
+
+                        case R.id.nav_map:
+                            break;
+                    }
+                    return false;
+                }
+            };
 
 }

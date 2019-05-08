@@ -22,17 +22,23 @@
 
 package com.example.ibeet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
@@ -77,6 +83,13 @@ public class FoodActivity extends AppCompatActivity {
         CaloriesCalculator.getInstance().initCalc(this);
         TimeCalculator.getInstance().updateDate(this);
         CaloriesCalculator.getInstance().readFromFile(this);
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        Menu menu = bottomNav.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
 
         //Init statistics Widgets
         caloriesDayText = findViewById(R.id.caloriesNowText);
@@ -332,4 +345,27 @@ public class FoodActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+
+                        case R.id.nav_food:
+                            break;
+
+                        case R.id.nav_profile:
+                            Intent profileActivity = new Intent(FoodActivity.this, ProfileActivity.class);
+                            startActivity(profileActivity);
+                            break;
+
+                        case R.id.nav_map:
+                            Intent mapsActivity = new Intent(FoodActivity.this, TrackerActivity.class);
+                            startActivity(mapsActivity);
+                            break;
+                    }
+                    return false;
+                }
+            };
 }
