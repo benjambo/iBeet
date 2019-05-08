@@ -1,46 +1,63 @@
 package com.example.ibeet;
 
-public class User {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class User implements Serializable {
     int id;
-    String name;
+    String userName;
     String password;
+    String name;
+    int age;
+    boolean isMale;
+
+    private ArrayList<double[]> nutCollection;
 
     //Needs two constructors to function right!
     //Constructor containing two needed parameters
-    public User(String name, String password)
+    public User(String userName, String password)
     {
-        this.name = name;
+        this.userName = userName;
         this.password=password;
     }
-    //Constructor containing all three parameters
+    //Constructor containing 3 three parameters
     public User(int id, String usr, String psd)
     {
         this.id=id;
-        this.name = usr;
+        this.userName = usr;
         this.password=psd;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    //Constructor for whole package
+    public User(String userName, String password, String name, String age, boolean isMale){
+        this.userName = userName;
         this.password = password;
+        this.name = name;
+        this.age = Integer.parseInt(age);
+        this.isMale = isMale;
     }
+
+    //NAME
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    //AGE
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+
+    //GENDER
+    public boolean isMale() { return isMale; }
+    public void setMale(boolean male) { isMale = male; }
+
+    //ID
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    //USERNAME
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
+
+    //PASSWORD
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }

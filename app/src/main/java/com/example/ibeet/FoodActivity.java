@@ -39,11 +39,6 @@ import org.florescu.android.rangeseekbar.RangeSeekBar;
 
 public class FoodActivity extends AppCompatActivity {
 
-    //static dietary balance until options are established
-    private final static double PERCENT_CARBS = 0.55;
-    private final static double PERCENT_PROT = 0.3;
-    private final static double PERCENT_FAT = 0.15;
-
     private double weightValue = 0;
     private double plateFirstDivision = 0;
     private double plateSecondDivision = 0;
@@ -74,9 +69,9 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food);
 
         //setup Singletons
-        CaloriesCalculator.getInstance().initCalc(this);
+
         TimeCalculator.getInstance().updateDate(this);
-        CaloriesCalculator.getInstance().readFromFile(this);
+        CaloriesCalculator.getInstance().initializeCalc(this);
 
         //Init statistics Widgets
         caloriesDayText = findViewById(R.id.caloriesNowText);
@@ -149,12 +144,7 @@ public class FoodActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        CaloriesCalculator.getInstance().writeIntoFile(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+        FileHandler.getInstance().writeUserFile(this);
     }
 
     @Override
@@ -178,7 +168,7 @@ public class FoodActivity extends AppCompatActivity {
                     double vegePercent = plateFirstDivision / 100;
                     double meatPercent = (plateSecondDivision - plateFirstDivision) / 100;
                     CaloriesCalculator.getInstance().setNewPlate(weightValue, vegePercent, meatPercent);
-                    String foo = CaloriesCalculator.getInstance().calculatePlate();
+                    CaloriesCalculator.getInstance().calculatePlate(FoodActivity.this);
                     toggleLayouts();
                     break;
             }

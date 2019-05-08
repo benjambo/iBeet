@@ -41,6 +41,7 @@ private Toast backToast;
         boolean firstStart = prefs.getBoolean("firstStart", false);
 
         if (firstStart) {
+
             Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(mainActivity);
         }
@@ -56,9 +57,12 @@ private Toast backToast;
                     Toast.makeText(LoginActivity.this,"User Does Not Exist",Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    //set current user to prefs
+                    SharedPreferences.Editor edit = prefs.edit();
+                    edit.putString("userKey", name);
+                    edit.commit();
                     Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(mainActivity);
-
                     finish();
                 }
             }
@@ -96,7 +100,7 @@ private Toast backToast;
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("firstStart", true);
-        editor.apply();
+        editor.commit();
     }
 
     @Override

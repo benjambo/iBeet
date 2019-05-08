@@ -79,15 +79,17 @@ class CaloriesCalculator {
     private double plateWeight, vegetablePercentage, meatToCarbsPercentage;
     private double calories, carbGrams, fatGrams, proteinGrams;
 
-    private UserFile myFile;
 
     //Debugging
     //private final static int AGE = 22;
-    private final static int ACTIVITY_MODE = 1;
+    private final static int ACTIVITY_MODE = 1; //We don't have the implementation of activity mode so static will do.
     //private final static boolean GENDER_IS_MALE = true;
+
+    private String userName;
 
     private SharedPreferences prefs;
     private static final String PREFS_DATES = "com.example.ibeet.DATES";
+
     private int AGE;
     //private int ACTIVITY_MODE;
     private boolean GENDER_IS_MALE;
@@ -100,20 +102,24 @@ class CaloriesCalculator {
         FoodListGenerator foodListGenerator = new FoodListGenerator();
         calorieNeeds = foodListGenerator.getList();
 
-        //Initialize nutCollection
+        //Initialize nutCollection just in case
+        //"For screen is blue and full of errors"
         nutritionalCollection = new ArrayList<>();
         for(int i=0;i<7;i++){
             nutritionalCollection.add(new double[]{0, 0, 0, 0});
         }
     }
 
-    public void initCalc(Context context){
+    /**
+     * This should be first methdod performed on this class
+     * @param context : Context
+     */
+    public void initializeCalc(Context context) {
         prefs = context.getSharedPreferences(PREFS_DATES, Context.MODE_PRIVATE);
-
-        String AGEtemp = prefs.getString("ageKey", "20");
-        AGE = Integer.parseInt(AGEtemp);
-
-        GENDER_IS_MALE = prefs.getBoolean("sexKey", true);
+        userName = prefs.getString("userKey", "");
+        nutritionalCollection = FileHandler.getInstance().readUserFile(context).getNutCollection(userName);
+        AGE = FileHandler.getInstance().readUserFile(context).getUser(userName).getAge();
+        GENDER_IS_MALE = FileHandler.getInstance().readUserFile(context).getUser(userName).isMale();
     }
 
     /**
@@ -131,9 +137,8 @@ class CaloriesCalculator {
 
     /**
      * Calculate Calories and carbs, protein and fat in grams.
-      * @return String
      */
-    public String calculatePlate() {
+    public void calculatePlate(Context context) {
         double vegeWeight = plateWeight * vegetablePercentage;
         double meatWeight = (plateWeight - vegeWeight) * meatToCarbsPercentage;
         double carbWeight = (plateWeight - vegeWeight) - meatWeight;
@@ -143,8 +148,7 @@ class CaloriesCalculator {
         proteinGrams = ((0.2 * 0.3 * vegeWeight) + (0.25 * 0.9 * meatWeight));
         fatGrams = ((0.25 * 0.1 * meatWeight) + (0.05 * carbWeight));
 
-        update(calories, carbGrams, proteinGrams, fatGrams);
-        return " ";
+        update(context, calories, carbGrams, proteinGrams, fatGrams);
     }
 
 
@@ -155,17 +159,18 @@ class CaloriesCalculator {
      * @param proteinGrams : double
      * @param fatGrams : double
      */
-    private void update(double calories, double carbGrams, double proteinGrams, double fatGrams){
+    private void update(Context context ,double calories, double carbGrams, double proteinGrams, double fatGrams){
 
         double[] newCollection = {calories, carbGrams, proteinGrams, fatGrams};
 
         //make sure we stack current days info, not overwrite it
         //when week passes, previous weekdays get overwritten.
         //
-        // - if a day has not passed since last update
-        // - else if day has passed since last update
+        // - if a day has not passed since last update, add nutritional values
+        // - else if day has passed since last update, rewrite old nutritional values
         // - else error
         //
+        // - Update file
         int rotationIndex = TimeCalculator.getInstance().getDayRotation();
 
         if(rotationIndex == TimeCalculator.getInstance().getComparativeDay()){
@@ -181,6 +186,9 @@ class CaloriesCalculator {
         } else {
             Log.d("CALORIES_CALCULATOR.UPDATE", "ERROR SETTING NUTRITIONAL_COLLECTION");
         }
+
+        FileHandler.getInstance().readUserFile(context).setNutCollection(nutritionalCollection,
+                userName);
     }
 
     /**
@@ -252,54 +260,5 @@ class CaloriesCalculator {
             );}
         }
         return 0;
-    }
-
-    public void readFromFile(Context context) {
-        try {
-            FileInputStream fis = context.openFileInput("userFile.txt");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            myFile = (UserFile)ois.readObject();
-            fis.close();
-            ois.close();
-        } catch (IOException | ClassNotFoundException a) {
-        }
-
-        nutritionalCollection = myFile.getNutList();
-    }
-
-    public void writeIntoFile(Context context){
-
-        prefs = context.getSharedPreferences(PREFS_DATES,context.MODE_PRIVATE);
-        String user = prefs.getString("userKey", "");
-        myFile.setNutList(nutritionalCollection);
-
-        try{
-            FileOutputStream fos = context.openFileOutput("userFile.txt", context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(myFile);
-            fos.close();
-            oos.close();
-        } catch (IOException a){ }
-    }
-
-    /**
-     *
-     * @param context : Contexr
-     * @param newName : String
-     */
-    public void writeIntoFile(Context context, String newName){
-
-        myFile = new UserFile(newName);
-        myFile.initNewUser(newName);
-
-        try{
-            FileOutputStream fos = context.openFileOutput("userFile.txt", context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(myFile);
-            fos.close();
-            oos.close();
-        } catch (IOException a){ }
-
-        nutritionalCollection = myFile.getNutList();
     }
 }

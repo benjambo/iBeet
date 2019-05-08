@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.File;
+
 public class ProfileActivity extends AppCompatActivity {
 private TextView username, age, sessionDistance, sessionSpeed, allTimeDistance, lastSessionSpeed, levelViewer, levelProgressionViewer;
 private ProgressBar levelProgression;
