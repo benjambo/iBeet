@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
 private TextView username, age, sessionDistance, sessionSpeed, allTimeDistance, lastSessionSpeed, levelViewer;
+private ProgressBar levelProgression;
 private Button logout;
 private SharedPreferences prefs;
 LevelGenerator levelGenerator = new LevelGenerator();
@@ -30,6 +32,7 @@ LevelGenerator levelGenerator = new LevelGenerator();
         allTimeDistance = findViewById(R.id.allTimeDistanceView);
         lastSessionSpeed = findViewById(R.id.lastSessionAvSpeedView);
         levelViewer = findViewById(R.id.levelView);
+        levelProgression = findViewById(R.id.progressBarLevel);
 
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
 
@@ -45,6 +48,8 @@ LevelGenerator levelGenerator = new LevelGenerator();
         Log.d("Kokonaismatka",String.valueOf(prefs.getFloat("allTimeDistanceTravelled", 0)));
         levelGenerator.calculateNewLevel();
         Log.d("Current level", String.valueOf(levelGenerator.getCurrentLevel()));
+        levelProgression.setMax(levelGenerator.neededXp);
+        levelProgression.setProgress(levelGenerator.currentXp);
 
         //USERS TRACKER RECORDS AND LEVEL DISPLAYS HERE:
         float currSesDist = prefs.getFloat("sessionDistanceTravelled",0);
