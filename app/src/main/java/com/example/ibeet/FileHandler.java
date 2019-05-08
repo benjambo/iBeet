@@ -1,18 +1,24 @@
-/***************************************************************************************************
+/**
+ *                              Filehandler
  *
- *                                      FileHandler
+ *  FileHandler singleton is a tool for reading and writing User info and statistic to decice memory
+ *  using java.io
  *
- *  This is a singleton, that manages a devices internal storage (side-by-side with SQLite DB)
+ *  two methods:
+ *      - readUserFile
+ *          makes sure that UserFile is returned.
  *
- **************************************************************************************************/
+ *      - writeUserFile
+ *          writes what exists in current instance of UserFile myFile
+ */
+
 package com.example.ibeet;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,55 +35,57 @@ class FileHandler {
     private UserFile myFile;
 
     private FileHandler() {
-
+        myFile = null;
     }
 
     /**
-     * Gain access to UserFile
-     * With this you can get and set values in the userfile.
+     * Read userfile.
+     *  if read = get
+     *  if !read = readFromMemory
+     *  if !exists = create
      * @param context : Context
-     * @return : UserFile
+     * @return
      */
-    public UserFile readUserFile(Context context) {
-
-        //If userfile is already declared & pointed
+    public UserFile readUserFile(Context context){
         if(myFile != null){
             return myFile;
-        }
+        } else {
+            try{
+                FileInputStream fileIn = context.openFileInput("userFile.txt");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                myFile = (UserFile)in.readObject();
+                fileIn.close();
+                in.close();
+                return myFile;
 
-        try {
-            FileInputStream fis = context.openFileInput("userFile.txt");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            myFile = (UserFile) ois.readObject();
-            fis.close();
-            ois.close();
-            return  myFile;
-        } catch (IOException | ClassNotFoundException a) {
-            Log.d("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL", "readUserFile: ERROR READING USERFILE");
-            myFile = createFile(context);
+            } catch (IOException | ClassNotFoundException a){
+                Log.d("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+                        "readUserFile: FILE DOESN'T EXIST");
+                myFile = new UserFile();
+                return myFile;
+            }
         }
-        return myFile;
     }
 
     /**
-     * upon activity destruction save info into user file. This is not used for editing but saving
-     * data in the device!
+     * Upon terminjation, write file into memory
      * @param context : Context
      */
-    public void writeFile(Context context){
-        try{
-            FileOutputStream fos = context.openFileOutput("userFile.txt", Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this.myFile);
-            fos.close();
-            oos.close();
-        } catch (IOException a){ }
-    }
+    public void writeUserFile(Context context){
+        if(myFile == null){
+            Log.d("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "writeUserFile: myFile or nutColl is null");
+        }
 
-    //create storage file for a fresh application
-    private UserFile createFile(Context context){
-        myFile = new UserFile();
-        writeFile(context);
-        return myFile;
+        try{
+            FileOutputStream fileOut = context.openFileOutput("userFile.txt", Context.MODE_PRIVATE);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(myFile);
+            out.close();
+            fileOut.close();
+
+        } catch(IOException a){
+            Log.d("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP", "writeUserFile: WRITING FAILED");
+        }
     }
 }

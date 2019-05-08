@@ -64,10 +64,4 @@ private SharedPreferences prefs;
             }
         });
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        FileHandler.getInstance().writeFile(this);
-    }
 }

@@ -82,11 +82,14 @@ class CaloriesCalculator {
 
     //Debugging
     //private final static int AGE = 22;
-    private final static int ACTIVITY_MODE = 1;
+    private final static int ACTIVITY_MODE = 1; //We don't have the implementation of activity mode so static will do.
     //private final static boolean GENDER_IS_MALE = true;
+
+    private String userName;
 
     private SharedPreferences prefs;
     private static final String PREFS_DATES = "com.example.ibeet.DATES";
+
     private int AGE;
     //private int ACTIVITY_MODE;
     private boolean GENDER_IS_MALE;
@@ -113,13 +116,10 @@ class CaloriesCalculator {
      */
     public void initializeCalc(Context context) {
         prefs = context.getSharedPreferences(PREFS_DATES, Context.MODE_PRIVATE);
-
-        FileHandler.getInstance().readUserFile(context).enableUser(prefs.getString("userKey", "ERROR"));
-
-        User user = FileHandler.getInstance().readUserFile(context).getUser();
-
-        AGE = user.getAge();
-        GENDER_IS_MALE = user.isMale();
+        userName = prefs.getString("userKey", "");
+        nutritionalCollection = FileHandler.getInstance().readUserFile(context).getNutCollection(userName);
+        AGE = FileHandler.getInstance().readUserFile(context).getUser(userName).getAge();
+        GENDER_IS_MALE = FileHandler.getInstance().readUserFile(context).getUser(userName).isMale();
     }
 
     /**
@@ -137,7 +137,6 @@ class CaloriesCalculator {
 
     /**
      * Calculate Calories and carbs, protein and fat in grams.
-      * @return String
      */
     public void calculatePlate(Context context) {
         double vegeWeight = plateWeight * vegetablePercentage;
@@ -160,7 +159,7 @@ class CaloriesCalculator {
      * @param proteinGrams : double
      * @param fatGrams : double
      */
-    private void update(Context context, double calories, double carbGrams, double proteinGrams, double fatGrams){
+    private void update(Context context ,double calories, double carbGrams, double proteinGrams, double fatGrams){
 
         double[] newCollection = {calories, carbGrams, proteinGrams, fatGrams};
 
@@ -186,9 +185,10 @@ class CaloriesCalculator {
             TimeCalculator.getInstance().setComparativeDay(rotationIndex);
         } else {
             Log.d("CALORIES_CALCULATOR.UPDATE", "ERROR SETTING NUTRITIONAL_COLLECTION");
-            return;
         }
-        FileHandler.getInstance().readUserFile(context).setUserNutritionList(nutritionalCollection);
+
+        FileHandler.getInstance().readUserFile(context).setNutCollection(nutritionalCollection,
+                userName);
     }
 
     /**

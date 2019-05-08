@@ -39,11 +39,6 @@ import org.florescu.android.rangeseekbar.RangeSeekBar;
 
 public class FoodActivity extends AppCompatActivity {
 
-    //static dietary balance until options are established
-    private final static double PERCENT_CARBS = 0.55;
-    private final static double PERCENT_PROT = 0.3;
-    private final static double PERCENT_FAT = 0.15;
-
     private double weightValue = 0;
     private double plateFirstDivision = 0;
     private double plateSecondDivision = 0;
@@ -76,7 +71,7 @@ public class FoodActivity extends AppCompatActivity {
         //setup Singletons
 
         TimeCalculator.getInstance().updateDate(this);
-        //CaloriesCalculator.getInstance().initializeCalc(this);
+        CaloriesCalculator.getInstance().initializeCalc(this);
 
         //Init statistics Widgets
         caloriesDayText = findViewById(R.id.caloriesNowText);
@@ -149,13 +144,7 @@ public class FoodActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FileHandler.getInstance().writeFile(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        FileHandler.getInstance().writeFile(this);
+        FileHandler.getInstance().writeUserFile(this);
     }
 
     @Override

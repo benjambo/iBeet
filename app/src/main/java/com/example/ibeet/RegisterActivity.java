@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,15 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
                 //inserting registered accounts to database
                 db=new DatabaseSQL(RegisterActivity.this);
 
-                /*
-                //Version.2
-                //Add new user to database and send instance var to Calculator
-                //DELETE
-                //NEW VERSION BELOW IN ELSE STATEMENT
-                User user = new User(username.getText().toString(), password.getText().toString());
-                db.addUser(user);
-                */
-
                 //Get text
                 String names = name.getText().toString();
                 String usernames = username.getText().toString();
@@ -78,13 +68,13 @@ public class RegisterActivity extends AppCompatActivity {
                 editor.putBoolean("sexKey", Boolean.valueOf(gender));
                 editor.commit();
 
-                //Add new user to database
                 User user = new User(usernames, passwords, names, ages, Boolean.valueOf(gender));
+
+                //add the user to UserFile.
+                FileHandler.getInstance().readUserFile(RegisterActivity.this).setNewUser(user);
+
+                //add username and psw to db
                 db.addUser(user);
-
-                //Add new user to UserFile
-
-                FileHandler.getInstance().readUserFile(RegisterActivity.this).addUser(user);
 
                 Log.d("KOOL", "works: " + usernames + " " + ages + " " + gender);
 

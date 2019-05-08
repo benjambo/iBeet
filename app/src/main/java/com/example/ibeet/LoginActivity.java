@@ -42,9 +42,6 @@ private Toast backToast;
 
         if (firstStart) {
 
-            //we activate a specific user from storage
-            FileHandler.getInstance().readUserFile(this);
-
             Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(mainActivity);
         }
@@ -60,9 +57,12 @@ private Toast backToast;
                     Toast.makeText(LoginActivity.this,"User Does Not Exist",Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    //set current user to prefs
+                    prefs.edit().putString("userKey", name);
+                    prefs.edit().commit();
+
                     Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(mainActivity);
-
                     finish();
                 }
             }

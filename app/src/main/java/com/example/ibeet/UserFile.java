@@ -1,3 +1,16 @@
+/**
+ *                              UserFile
+ *
+ * This implementation is not the best.
+ *
+ * I would now, after immense studying, create this system of User, UserFile, FileHandler
+ * in a very different way, but now there's not enough time to rewrite.
+ * - panu
+ *
+ * This class keeps a list of users and a list of nutritional statistics. Both accessable with a
+ * username : String.
+ */
+
 package com.example.ibeet;
 
 import android.util.Log;
@@ -8,81 +21,64 @@ import java.util.HashMap;
 
 public class UserFile implements Serializable {
 
-    private HashMap<String, ArrayList<double[]>> userNutritionList;
+    //THESE TWO FEATURES ARE SEPARATED TO AVOID OVERLAP. NOT ENOUGH TIME TO OPTIMIZE
     private HashMap<String, User> userList;
-    private User user;
+    private HashMap<String, ArrayList<double[]>> nutMap;
 
-    /**
-     * this constructor is (atleast is meant to) run only the first time the application is launched
-     */
     public UserFile(){
-        userNutritionList = new HashMap<>();
+        nutMap = new HashMap<>();
         userList = new HashMap<>();
     }
 
     /**
-     * Add a new user into the filesystem
-     * @param user : User
-     */
-    public void addUser(User user){
-        this.user = user;
-
-        if(userList == null){
-            userList = new HashMap<>();
-            userNutritionList = new HashMap<>();
-        }
-
-        userList.put(user.getUserName(), user);
-        initNewUserNutrition(user.getUserName());
-    }
-
-    /**
-     * New users get their nutritional statistic lists that we initialize here
-     * @param newUser : String
-     */
-    private void initNewUserNutrition(String newUser){
-        ArrayList<double[]> emptyList = new ArrayList<>();
-        for(int i=0;i<7;i++){
-            emptyList.add(new double[]{0, 0, 0, 0});
-        }
-        userNutritionList.put(newUser, emptyList);
-    }
-
-    /**
-     * After succesfull login, set that user as active user
+     * set nutritional collection of a user
+     * @param nutCollection : ArrayList<double[]>
      * @param username : String
      */
-    public void enableUser(String username){
-        if(userList.containsKey(username)){
-            this.user = getUser(username);
+    public void setNutCollection(ArrayList<double[]> nutCollection, String username){
+        if(nutMap.containsKey(username)){
+            nutMap.remove(username);
+            nutMap.put(username, nutCollection);
         } else {
-            Log.d("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
-                    , "enableUser: REQUESTING NON-EXISTANT USER");
+            nutMap.put(username, nutCollection);
         }
     }
 
     /**
-     * Simply get access to a user, using username as identificator
+     * get nutritionalCollection of an user
+     * @param username : String
+     * @return nutCollection : ArrayList<double>
+     */
+    public ArrayList<double[]> getNutCollection(String username){
+        if(nutMap.containsKey(username)) {
+            return nutMap.get(username);
+        } else {
+            Log.d("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+                    "getNutCollection: NO KEY: " + username + " FOUND!!");
+            return null;
+        }
+    }
+
+    /**
+     * Add a new user to userfile
+     * @param user : User
+     */
+    public void setNewUser(User user){
+        userList.put(user.getUserName(), user);
+
+        ArrayList<double[]> list = new ArrayList<>();
+        for(int i=0;i<7;i++){
+            list.add(new double[]{0, 0, 0, 0});
+        }
+        nutMap.put(user.getUserName(), list);
+    }
+
+    /**
+     * get user from file
      * @param username : String
      * @return user : User
      */
     public User getUser(String username){
         return userList.get(username);
-    }
-
-    public User getUser(){
-        return userList.get(this.user.getUserName());
-    }
-
-    /**
-     * Update latest nutritinal list to UserFile
-     * @param nutList : ArrayList<double[]>
-     */
-    public void setUserNutritionList(ArrayList<double[]> nutList){
-        userNutritionList.put(user.getUserName(), nutList);
-    }
-
-    public ArrayList<double[]> getUserNutrition(String username){
-        return userNutritionList.get(username);
     }
 }

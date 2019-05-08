@@ -1,12 +1,17 @@
 package com.example.ibeet;
 
-public class User {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class User implements Serializable {
     int id;
     String userName;
     String password;
     String name;
     int age;
     boolean isMale;
+
+    private ArrayList<double[]> nutCollection;
 
     //Needs two constructors to function right!
     //Constructor containing two needed parameters
@@ -23,7 +28,6 @@ public class User {
         this.password=psd;
     }
 
-
     //Constructor for whole package
     public User(String userName, String password, String name, String age, boolean isMale){
         this.userName = userName;
@@ -33,39 +37,27 @@ public class User {
         this.isMale = isMale;
     }
 
+    //NAME
     public String getName() { return name; }
-
     public void setName(String name) { this.name = name; }
 
+    //AGE
     public int getAge() { return age; }
-
     public void setAge(int age) { this.age = age; }
 
+    //GENDER
     public boolean isMale() { return isMale; }
-
     public void setMale(boolean male) { isMale = male; }
 
-    public int getId() {
-        return id;
-    }
+    //ID
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    //USERNAME
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    //PASSWORD
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
