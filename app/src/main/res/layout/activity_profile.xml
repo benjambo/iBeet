@@ -220,6 +220,7 @@
 
     <TextView
         android:id="@+id/levelProgressionView"
+        android:textColor="@color/white"
         android:layout_width="112dp"
         android:layout_height="18dp"
         android:textAlignment="center"
