@@ -1,7 +1,5 @@
 package com.example.ibeet;
 
-import android.util.Log;
-
 public class LevelGenerator {
     int currentLevel;
     int totalXp;
