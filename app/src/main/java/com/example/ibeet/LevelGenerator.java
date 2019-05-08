@@ -11,7 +11,7 @@ public class LevelGenerator {
     MarkerHandler markerHandler = new MarkerHandler();
 
     public LevelGenerator(){
-        neededXp = 200;
+        neededXp = 150;
     }
 
     public void calculateNewLevel() {
@@ -29,15 +29,18 @@ public class LevelGenerator {
     }
 
     public void getXpNeeded(){
-        neededXp += currentLevel*200;
+        neededXp += 150;
+        Log.d("XpNeeded", String.valueOf(neededXp));
     }
 
     public void resetCurrentXp(){
         currentXp = currentXp - neededXp;
+        Log.d("currentXp", String.valueOf(currentXp));
     }
 
     public void setTotalXp(int totalDist){
         this.totalXp = totalDist;
+        Log.d("totalXp", String.valueOf(totalXp));
         currentXp = totalXp;
     }
 
