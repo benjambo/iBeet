@@ -2,16 +2,20 @@ package com.example.ibeet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
-    private Button food, login, mapButton, profile;
+    private Button food, login, mapButton, profile, addDay;
     private long backPressedTime;
     private Toast backToast;
 
@@ -55,6 +59,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent profileActivity = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(profileActivity);
+            }
+        });
+
+        //DEBUG
+        addDay = findViewById(R.id.addDay);
+        addDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv =  findViewById(R.id.guideFood);
+                String cals = (String)tv.getText();
+                int calsInt = Integer.parseInt(cals);
+
+                SharedPreferences prefs = MainActivity.this.getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
+                double[] daa = new double[]{(double)calsInt, 0, 0, 0};
+
+                FileHandler.getInstance().readUserFile(MainActivity.this).getNutCollection(
+                        prefs.getString("userKey", "")).set(
+                                TimeCalculator.getInstance().getDayRotation(), daa
+                );
+
             }
         });
     }
