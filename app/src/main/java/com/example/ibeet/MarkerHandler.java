@@ -1,11 +1,8 @@
 package com.example.ibeet;
 
 import android.location.Location;
-import android.util.Log;
 
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -21,6 +18,7 @@ class MarkerHandler {
     int currentIndex;
 
     public MarkerHandler() {
+        //beenLocations as Location, locationArray as LatLng
         beenLocations = new ArrayList<>();
         locationsArray = new ArrayList<>();
         totalDistanceTravelled = 0.0f;

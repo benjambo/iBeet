@@ -74,17 +74,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         LatLng metropolia = new LatLng(60.258617, 24.844468);
         mMap.addMarker(new MarkerOptions().position(metropolia).title("Metropolia, here I was made!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(metropolia));
-
-
-/*      This can be used later to draw recent locations. NOTE: storing beenlocats.locationsArray is needed.
-        if (beenLocats.locationsArray.size()<2){} else{
-            for(int i=1; i<=beenLocats.locationsArray.size();i++){
-                mMap.addPolyline(new PolylineOptions()
-                .add(new LatLng(beenLocats.locationsArray.get(i).latitude, beenLocats.locationsArray.get(i).longitude),
-                        new LatLng(beenLocats.locationsArray.get(i-1).latitude, beenLocats.locationsArray.get(i-1).longitude))
-                        .width(5).color(Color.GREEN));
-            }
-        }*/
     }
 
     @Override
@@ -94,16 +83,13 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //Reset current position
         currentPosMarker.setPosition(myCoordinates);
 
-            //Leave a custom marker at recent location
-            //mMap.addMarker(new MarkerOptions().position(myCoordinates).title("I have been here").icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker)));
-
         //Draw line between last location and current location
         if(beenLocats.getCurrentIndex()==0){} else {
             mMap.addPolyline(new PolylineOptions()
                     .add(new LatLng(beenLocats.getLocationLat(),beenLocats.getLocationLng()), new LatLng (myCoordinates.latitude, myCoordinates.longitude))
                     .width(5).color(Color.RED));
         }
-        //Call for distance calculation yeet
+        //Call for distance calculation
         beenLocats.setNewMarker(location);
 
         //Button to center view on the current location
