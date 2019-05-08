@@ -82,7 +82,7 @@ LevelGenerator levelGenerator = new LevelGenerator();
                 prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("firstStart", false);
-                editor.commit();
+                editor.apply();
 
                 Intent loginActivity = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(loginActivity);
@@ -91,6 +91,7 @@ LevelGenerator levelGenerator = new LevelGenerator();
         });
     }
 
+    //Navigation Setup
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -115,10 +116,6 @@ LevelGenerator levelGenerator = new LevelGenerator();
 
     @Override
     public void onBackPressed() {
-        /**
-         * Setting back button to not to respond on first click
-         * and on second click to exit the app on mainpage!!!
-         */
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel();
             Intent exitApp = new Intent(Intent.ACTION_MAIN);
