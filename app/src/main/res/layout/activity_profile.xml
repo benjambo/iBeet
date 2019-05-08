@@ -196,4 +196,14 @@
         app:layout_constraintStart_toEndOf="@+id/profileImage"
         app:layout_constraintTop_toTopOf="@+id/levelView"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="116dp"
+        android:layout_height="17dp"
+        app:layout_constraintEnd_toEndOf="@+id/levelView"
+        app:layout_constraintStart_toStartOf="@+id/levelTextview"
+        app:layout_constraintTop_toBottomOf="@+id/levelView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
