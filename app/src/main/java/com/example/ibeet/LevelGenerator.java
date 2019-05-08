@@ -20,24 +20,18 @@ public class LevelGenerator {
             resetCurrentXp();
         }
     }
-    //CHECK IF THERE'S ENOUGH XP TO LEVEL UP
-    public void isEnoughXp(){
-            currentLevel++;
-    }
+
     //EVERY NEW LEVEL REQUIRES 150M MORE DISTANCE TRAVELLED
     public void getXpNeeded(){
         neededXp += 150;
-        Log.d("XpNeeded", String.valueOf(neededXp));
     }
     //GET NEW CURRENT XP
     public void resetCurrentXp(){
         currentXp = currentXp - neededXp;
-        Log.d("currentXp", String.valueOf(currentXp));
     }
     //SET TOTAL XP
     public void setTotalXp(int totalDist){
         this.totalXp = totalDist;
-        Log.d("totalXp", String.valueOf(totalXp));
         currentXp = totalXp;
     }
     //RETURN CURRENT LEVEL
