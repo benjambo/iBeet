@@ -114,6 +114,7 @@ LevelGenerator levelGenerator = new LevelGenerator();
                 }
             };
 
+    //Back press setup
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
