@@ -50,7 +50,7 @@ class MarkerHandler {
     }
 
     public String getTotalDistance(){
-        return "Distance travelled today: " + String.valueOf(String.format("%.2f",totalDistanceTravelled)) + " m";
+        return "Distance travelled: " + String.valueOf(String.format("%.2f",totalDistanceTravelled)) + " m";
     }
 
     public Float getTotalDistanceFloat(){
@@ -58,7 +58,7 @@ class MarkerHandler {
     }
 
     public String getAverageSpeed(){
-        return "Average speed today: " + String.valueOf(String.format("%.2f",averageSpeed)) + " m/s";
+        return "Average speed: " + String.valueOf(String.format("%.2f",averageSpeed)) + " m/s";
     }
 
     public Float getAverageSpeedFloat(){

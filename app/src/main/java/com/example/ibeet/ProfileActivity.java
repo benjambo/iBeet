@@ -44,14 +44,12 @@ LevelGenerator levelGenerator = new LevelGenerator();
         username.setText(String.format("Name: %s", user));
         age.setText(String.format("Age: %s", ages));
 
-        //USER LEVEL VERSION 1.0
+        //USER LEVEL, FIRST SET TOTAL XP EQUAL TO TOTAL DISTANCE TRAVELLED
         levelGenerator.setTotalXp((int) prefs.getFloat("allTimeDistanceTravelled", 0));
-        Log.d("Kokonaismatka",String.valueOf(prefs.getFloat("allTimeDistanceTravelled", 0)));
         levelGenerator.calculateNewLevel();
-        Log.d("Current level", String.valueOf(levelGenerator.getCurrentLevel()));
         levelProgression.setMax(levelGenerator.neededXp);
         levelProgression.setProgress(levelGenerator.currentXp);
-        levelProgressionViewer.setText(levelGenerator.currentXp + "/" + levelGenerator.neededXp);
+        levelProgressionViewer.setText(levelGenerator.currentXp + "m/" + levelGenerator.neededXp + "m");
 
         //USERS TRACKER RECORDS AND LEVEL DISPLAYS HERE:
         float currSesDist = prefs.getFloat("sessionDistanceTravelled",0);
@@ -60,9 +58,9 @@ LevelGenerator levelGenerator = new LevelGenerator();
         float lastSesSpeed = prefs.getFloat("lastSessionAverageSpeed",0);
         int userLevel = levelGenerator.getCurrentLevel();
 
-        sessionDistance.setText(String.valueOf(currSesDist));
+        sessionDistance.setText(String.valueOf(currSesDist) + "m");
         sessionSpeed.setText(String.valueOf(currSesSpeed));
-        allTimeDistance.setText(String.valueOf(allDistance));
+        allTimeDistance.setText(String.valueOf(allDistance) + "m");
         lastSessionSpeed.setText(String.valueOf(lastSesSpeed));
         levelViewer.setText(String.valueOf(userLevel));
 

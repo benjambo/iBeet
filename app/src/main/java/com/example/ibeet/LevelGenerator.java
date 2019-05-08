@@ -1,6 +1,5 @@
 package com.example.ibeet;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 public class LevelGenerator {
@@ -8,42 +7,40 @@ public class LevelGenerator {
     int totalXp;
     int currentXp;
     int neededXp;
-    MarkerHandler markerHandler = new MarkerHandler();
 
     public LevelGenerator(){
         neededXp = 150;
     }
 
     public void calculateNewLevel() {
+        //CHECK IF CURRENT XP IS ENOUGH TO LEVEL UP, RESET XP NEEDED FOR NEW LEVEL, TAKE NEEDED XP FROM CURRENT XP AND RETURN NEW CURRENT XP
         while (currentXp > neededXp){
-            isEnoughXp();
+            currentLevel++;
             getXpNeeded();
             resetCurrentXp();
         }
     }
-
+    //CHECK IF THERE'S ENOUGH XP TO LEVEL UP
     public void isEnoughXp(){
-        if (currentXp>0){
             currentLevel++;
-        } else{}
     }
-
+    //EVERY NEW LEVEL REQUIRES 150M MORE DISTANCE TRAVELLED
     public void getXpNeeded(){
         neededXp += 150;
         Log.d("XpNeeded", String.valueOf(neededXp));
     }
-
+    //GET NEW CURRENT XP
     public void resetCurrentXp(){
         currentXp = currentXp - neededXp;
         Log.d("currentXp", String.valueOf(currentXp));
     }
-
+    //SET TOTAL XP
     public void setTotalXp(int totalDist){
         this.totalXp = totalDist;
         Log.d("totalXp", String.valueOf(totalXp));
         currentXp = totalXp;
     }
-
+    //RETURN CURRENT LEVEL
     public int getCurrentLevel(){
         return currentLevel;
     }
