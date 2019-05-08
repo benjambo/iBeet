@@ -39,8 +39,6 @@ public class User implements Serializable {
         this.name = name;
         this.age = Integer.parseInt(age);
         this.isMale = isMale;
-        Log.d("WQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGH", "User: "+
-                age);
     }
 
     @NonNull
