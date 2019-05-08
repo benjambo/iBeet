@@ -39,8 +39,10 @@ LevelGenerator levelGenerator = new LevelGenerator();
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
 
         //GETTING USERS NAME AND AGE FROM SHARED PREFERENCES
-        String user = prefs.getString("nameKey", "Login");
-        String ages = prefs.getString("ageKey", "to see");
+        String userFromPrefs = prefs.getString("userKey", "Login");
+
+        User user = FileHandler.getInstance().readUserFile(this).getUser(userFromPrefs);
+        String ages = String.valueOf(user.age);
 
         username.setText(String.format("Name: %s", user));
         age.setText(String.format("Age: %s", ages));

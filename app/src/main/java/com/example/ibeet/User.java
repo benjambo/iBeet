@@ -1,5 +1,9 @@
 package com.example.ibeet;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -35,6 +39,14 @@ public class User implements Serializable {
         this.name = name;
         this.age = Integer.parseInt(age);
         this.isMale = isMale;
+        Log.d("WQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGH", "User: "+
+                age);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 
     //NAME
