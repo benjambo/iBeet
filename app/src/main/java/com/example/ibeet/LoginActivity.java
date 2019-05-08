@@ -58,9 +58,9 @@ private Toast backToast;
                 }
                 else {
                     //set current user to prefs
-                    prefs.edit().putString("userKey", name);
-                    prefs.edit().commit();
-
+                    SharedPreferences.Editor edit = prefs.edit();
+                    edit.putString("userKey", name);
+                    edit.commit();
                     Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(mainActivity);
                     finish();
