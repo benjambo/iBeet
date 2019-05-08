@@ -206,4 +206,13 @@
         app:layout_constraintStart_toStartOf="@+id/levelTextview"
         app:layout_constraintTop_toBottomOf="@+id/levelView" />
 
+    <TextView
+        android:id="@+id/levelProgressionView"
+        android:layout_width="112dp"
+        android:layout_height="18dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/progressBarLevel"
+        app:layout_constraintStart_toStartOf="@+id/progressBarLevel"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarLevel" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
