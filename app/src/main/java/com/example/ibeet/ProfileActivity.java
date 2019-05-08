@@ -37,8 +37,8 @@ LevelGenerator levelGenerator = new LevelGenerator();
         String user = prefs.getString("nameKey", "Login");
         String ages = prefs.getString("ageKey", "to see");
 
-        username.setText(user);
-        age.setText(ages);
+        username.setText(String.format("Name: %s", user));
+        age.setText(String.format("Age: %s", ages));
 
         //USER LEVEL VERSION 1.0
         levelGenerator.setTotalXp((int) prefs.getFloat("allTimeDistanceTravelled", 0));
