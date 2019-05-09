@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+                prefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("firstStart", false);
                 editor.apply();

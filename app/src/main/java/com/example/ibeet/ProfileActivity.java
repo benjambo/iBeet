@@ -6,24 +6,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.File;
+
 public class ProfileActivity extends AppCompatActivity {
-private TextView username, age, sessionDistance, sessionSpeed, allTimeDistance, lastSessionSpeed, levelViewer;
+private TextView username, age, sessionDistance, sessionSpeed, allTimeDistance, lastSessionSpeed, levelViewer, levelProgressionViewer;
+private ProgressBar levelProgression;
 private Button logout;
 private long backPressedTime;
 private Toast backToast;
 private SharedPreferences prefs;
 LevelGenerator levelGenerator = new LevelGenerator();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ LevelGenerator levelGenerator = new LevelGenerator();
         allTimeDistance = findViewById(R.id.allTimeDistanceView);
         lastSessionSpeed = findViewById(R.id.lastSessionAvSpeedView);
         levelViewer = findViewById(R.id.levelView);
+        levelProgression = findViewById(R.id.progressBarLevel);
+        levelProgressionViewer = findViewById(R.id.levelProgressionView);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -50,17 +55,20 @@ LevelGenerator levelGenerator = new LevelGenerator();
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
 
         //GETTING USERS NAME AND AGE FROM SHARED PREFERENCES
-        String user = prefs.getString("nameKey", "Login");
-        String ages = prefs.getString("ageKey", "to see");
+        String userFromPrefs = prefs.getString("userKey", "Login");
+
+        User user = FileHandler.getInstance().readUserFile(this).getUser(userFromPrefs);
+        String ages = String.valueOf(user.age);
 
         username.setText(String.format("Name: %s", user));
         age.setText(String.format("Age: %s", ages));
 
-        //USER LEVEL VERSION 1.0
+        //USER LEVEL, FIRST SET TOTAL XP EQUAL TO TOTAL DISTANCE TRAVELLED
         levelGenerator.setTotalXp((int) prefs.getFloat("allTimeDistanceTravelled", 0));
-        Log.d("Kokonaismatka",String.valueOf(prefs.getFloat("allTimeDistanceTravelled", 0)));
         levelGenerator.calculateNewLevel();
-        Log.d("Current level", String.valueOf(levelGenerator.getCurrentLevel()));
+        levelProgression.setMax(levelGenerator.neededXp);
+        levelProgression.setProgress(levelGenerator.currentXp);
+        levelProgressionViewer.setText(levelGenerator.currentXp + "m/" + levelGenerator.neededXp + "m");
 
         //USERS TRACKER RECORDS AND LEVEL DISPLAYS HERE:
         float currSesDist = prefs.getFloat("sessionDistanceTravelled",0);
@@ -82,14 +90,14 @@ LevelGenerator levelGenerator = new LevelGenerator();
                 prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("firstStart", false);
-                editor.apply();
+                editor.commit();
 
                 Intent loginActivity = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(loginActivity);
                 finish();
             }
         });
-    }
+    } //foo
 
     //Navigation Setup
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -130,5 +138,4 @@ LevelGenerator levelGenerator = new LevelGenerator();
         }
         backPressedTime = System.currentTimeMillis();
     }
-
 }
