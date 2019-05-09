@@ -38,11 +38,11 @@ private Toast backToast;
         login = findViewById(R.id.btn_login);
 
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
-        boolean firstStart = prefs.getBoolean("firstStart", false);
+        boolean firstStart = prefs.getBoolean("firstStart", true);
 
-        if (firstStart) {
-            Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(mainActivity);
+        if (!firstStart) {
+            Intent profileActivity = new Intent(LoginActivity.this, ProfileActivity.class);
+            startActivity(profileActivity);
         }
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +68,8 @@ private Toast backToast;
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putString("userKey", name);
                     edit.apply();
-                    Intent mainActivity = new Intent(LoginActivity.this, ProfileActivity.class);
-                    startActivity(mainActivity);
+                    Intent profileActivity = new Intent(LoginActivity.this, ProfileActivity.class);
+                    startActivity(profileActivity);
 
                     finish();
                 }
@@ -107,7 +107,7 @@ private Toast backToast;
 
         prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", true);
+        editor.putBoolean("firstStart", false);
         editor.apply();
     }
 

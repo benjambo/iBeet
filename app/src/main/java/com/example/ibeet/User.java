@@ -10,7 +10,7 @@ public class User implements Serializable {
     String userName;
     String password;
     String name;
-    int age;
+    String age;
     boolean isMale;
 
     //Needs two constructors to function right!
@@ -33,7 +33,7 @@ public class User implements Serializable {
         this.userName = userName;
         this.password = password;
         this.name = name;
-        this.age = Integer.parseInt(age);
+        this.age = age;
         this.isMale = isMale;
     }
 
@@ -48,8 +48,8 @@ public class User implements Serializable {
     public void setName(String name) { this.name = name; }
 
     //AGE
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
+    public String getAge() { return age; }
+    public void setAge(String age) { this.age = age; }
 
     //GENDER
     public boolean isMale() { return isMale; }

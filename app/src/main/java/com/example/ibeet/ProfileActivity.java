@@ -89,7 +89,7 @@ LevelGenerator levelGenerator = new LevelGenerator();
             public void onClick(View v) {
                 prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("firstStart", false);
+                editor.putBoolean("firstStart", true);
                 editor.commit();
 
                 Intent loginActivity = new Intent(ProfileActivity.this, LoginActivity.class);
@@ -137,5 +137,12 @@ LevelGenerator levelGenerator = new LevelGenerator();
             backToast.show();
         }
         backPressedTime = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FileHandler.getInstance().writeUserFile(this);
+
     }
 }

@@ -85,8 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(),"Please Fill in All the Input Fields", Toast.LENGTH_LONG).show();
                 }else{
                     //do what you want with the entered text
-                    Intent mainActivity = new Intent(RegisterActivity.this, ProfileActivity.class);
-                    startActivity(mainActivity);
+                    Intent profileActivity = new Intent(RegisterActivity.this, ProfileActivity.class);
+                    startActivity(profileActivity);
                     finish();
                 }
             }

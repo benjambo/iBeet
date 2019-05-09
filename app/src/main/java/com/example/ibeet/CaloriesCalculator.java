@@ -110,7 +110,7 @@ class CaloriesCalculator {
         prefs = context.getSharedPreferences(PREFS_DATES, Context.MODE_PRIVATE);
         userName = prefs.getString("userKey", "");
         nutritionalCollection = FileHandler.getInstance().readUserFile(context).getNutCollection(userName);
-        AGE = FileHandler.getInstance().readUserFile(context).getUser(userName).getAge();
+        AGE = Integer.parseInt(FileHandler.getInstance().readUserFile(context).getUser(userName).getAge());
         GENDER_IS_MALE = FileHandler.getInstance().readUserFile(context).getUser(userName).isMale();
     }
 

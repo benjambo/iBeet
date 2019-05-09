@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/i_eat_ass"
+                android:text="@string/i_eat_food"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="30sp"

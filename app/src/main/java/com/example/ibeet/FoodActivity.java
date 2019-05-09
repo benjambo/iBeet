@@ -157,10 +157,17 @@ public class FoodActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+   /* @Override
     protected void onDestroy() {
         super.onDestroy();
         FileHandler.getInstance().writeUserFile(this);
+    }*/
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FileHandler.getInstance().writeUserFile(this);
+
     }
 
     @Override

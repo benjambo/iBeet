@@ -59,7 +59,7 @@ class FileHandler {
                 return myFile;
 
             } catch (IOException | ClassNotFoundException a){
-                Log.d("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+                Log.d("ELÄIN",
                         "readUserFile: FILE DOESN'T EXIST");
                 myFile = new UserFile();
                 return myFile;
@@ -73,7 +73,7 @@ class FileHandler {
      */
     public void writeUserFile(Context context){
         if(myFile == null){
-            Log.d("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            Log.d("ELÄIN",
                     "writeUserFile: myFile or nutColl is null");
         }
 
@@ -85,7 +85,7 @@ class FileHandler {
             fileOut.close();
 
         } catch(IOException a){
-            Log.d("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP", "writeUserFile: WRITING FAILED");
+            Log.d("ELÄIN", "writeUserFile: WRITING FAILED");
         }
     }
 }
