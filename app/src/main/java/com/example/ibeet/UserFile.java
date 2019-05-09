@@ -64,6 +64,10 @@ public class UserFile implements Serializable {
      * @param user : User
      */
     public void setNewUser(User user){
+        if(userList.containsKey(user.getUserName())){
+            userList.remove(user.getUserName());
+        }
+
         userList.put(user.getUserName(), user);
 
         ArrayList<double[]> list = new ArrayList<>();
