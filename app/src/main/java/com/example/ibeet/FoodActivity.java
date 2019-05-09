@@ -121,7 +121,7 @@ public class FoodActivity extends AppCompatActivity {
         inputButton.setOnClickListener(myListener);
 
         updateViews();
-
+/*
         //size slider
         plateSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int barValue = 0;
@@ -140,8 +140,8 @@ public class FoodActivity extends AppCompatActivity {
                         + " grams",
                         Toast.LENGTH_SHORT).show();
             }
-        });
-
+       });
+*/
         //division slider
         rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Double>() {
             @Override
@@ -234,6 +234,7 @@ public class FoodActivity extends AppCompatActivity {
      * @param i : int
      * @return message : String
      */
+
     private String viewStringBuild(int i) {
         int foo; //foo is Recommended calories - hadCalories
         int bar; //bar is recommended calories
