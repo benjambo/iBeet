@@ -7,6 +7,19 @@
     android:background="@drawable/backgroundorange"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/profileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/button_background"
+        android:text="@string/profile"
+        android:textAllCaps="false"
+        android:textColor="@color/login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -59,17 +72,17 @@
         app:layout_constraintTop_toBottomOf="@+id/mapbtn" />
 
     <Button
-        android:id="@+id/profileBtn"
+        android:id="@+id/logoutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button_background"
-        android:text="Profile"
+        android:text="@string/logout"
         android:textAllCaps="false"
         android:textColor="@color/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileBtn" />
 
     <Button
         android:id="@+id/addDay"

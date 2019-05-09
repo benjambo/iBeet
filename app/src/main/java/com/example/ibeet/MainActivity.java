@@ -11,13 +11,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
-    private Button food, login, mapButton, profile, addDay;
+    private Button food, login, mapButton, profile, addDay, logout;
     private long backPressedTime;
     private Toast backToast;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +58,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent profileActivity = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(profileActivity);
+            }
+        });
+
+        //ON CLICK LOGS OUT OF PROFILE
+        logout = findViewById(R.id.logoutBtn);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("firstStart", false);
+                editor.apply();
+
+                Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginActivity);
+                finish();
             }
         });
 
