@@ -78,10 +78,10 @@ LevelGenerator levelGenerator = new LevelGenerator();
         float lastSesSpeed = prefs.getFloat("lastSessionAverageSpeed",0);
         int userLevel = levelGenerator.getCurrentLevel();
 
-        sessionDistance.setText(String.valueOf(currSesDist));
-        sessionSpeed.setText(String.valueOf(currSesSpeed));
-        allTimeDistance.setText(String.valueOf(allDistance));
-        lastSessionSpeed.setText(String.valueOf(lastSesSpeed));
+        sessionDistance.setText(String.valueOf(String.format("%.2f",currSesDist)));
+        sessionSpeed.setText(String.valueOf(String.format("%.2f",currSesSpeed)));
+        allTimeDistance.setText(String.valueOf(String.format("%.2f",allDistance)));
+        lastSessionSpeed.setText(String.valueOf(String.format("%.2f",lastSesSpeed)));
         levelViewer.setText(String.format("Level: " + (userLevel)));
 
         //ON CLICK LOGS OUT OF PROFILE
