@@ -27,6 +27,7 @@ private Toast backToast;
 private SharedPreferences prefs;
 LevelGenerator levelGenerator = new LevelGenerator();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +77,9 @@ LevelGenerator levelGenerator = new LevelGenerator();
         float lastSesSpeed = prefs.getFloat("lastSessionAverageSpeed",0);
         int userLevel = levelGenerator.getCurrentLevel();
 
-        sessionDistance.setText(String.valueOf(currSesDist) + "m");
+        sessionDistance.setText(String.valueOf(currSesDist));
         sessionSpeed.setText(String.valueOf(currSesSpeed));
-        allTimeDistance.setText(String.valueOf(allDistance) + "m");
+        allTimeDistance.setText(String.valueOf(allDistance));
         lastSessionSpeed.setText(String.valueOf(lastSesSpeed));
         levelViewer.setText(String.valueOf(userLevel));
 
