@@ -56,6 +56,9 @@ public class FoodActivity extends AppCompatActivity {
     private TextView calCompWeekText;
     private TextView dietReco;
 
+    private long backPressedTime;
+    private Toast backToast;
+
     private Button setNewPlate;
 
     //input field widgets
@@ -358,4 +361,21 @@ public class FoodActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    //Back press setup
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            Intent exitApp = new Intent(Intent.ACTION_MAIN);
+            exitApp.addCategory(Intent.CATEGORY_HOME);
+            exitApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(exitApp);
+            return;
+        } else {
+            backToast = Toast.makeText(FoodActivity.this, "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
+    }
 }
