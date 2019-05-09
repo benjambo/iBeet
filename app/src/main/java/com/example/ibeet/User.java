@@ -1,11 +1,9 @@
 package com.example.ibeet;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class User implements Serializable {
     int id;
@@ -14,8 +12,6 @@ public class User implements Serializable {
     String name;
     int age;
     boolean isMale;
-
-    private ArrayList<double[]> nutCollection;
 
     //Needs two constructors to function right!
     //Constructor containing two needed parameters

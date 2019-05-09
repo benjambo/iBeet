@@ -20,8 +20,6 @@ public class DatabaseSQL extends SQLiteOpenHelper {
     //Table userName
     private static final String Table_Name="user";
 
-    private static final String stats_table ="Food_stats_table";
-
     //Creating contacts Columns
     private static final String User_id="id";
     private static final String User_name="name";

@@ -59,14 +59,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.sql.Time;
 import java.util.ArrayList;
 
 
@@ -206,7 +198,7 @@ class CaloriesCalculator {
      * : double calories, double carbGrams, double proteinGrams, double fatGrams
      * @return double[] averageCollection
      */
-    public double[] getWeeksAverageResults(){
+    public double[] getWeeksResults(){
 
         int lastIndex = 7;
         if(TimeCalculator.getInstance().getTimeDiffInDays()<7){
@@ -216,10 +208,9 @@ class CaloriesCalculator {
         double[] averageCollection = new double[4];
 
         for(int i = 0; i<4; i++){
-            for(int j = 0; j<lastIndex; j++){
+            for(int j = 0; j<lastIndex + 1; j++){
                 averageValue += nutritionalCollection.get(j)[i];
             }
-            averageValue /= 7;
             averageCollection[i] = averageValue;
         }
         return averageCollection;
@@ -241,7 +232,7 @@ class CaloriesCalculator {
      */
     public double getWeeksComparison(){
         int comparisonCalories = getCalorieNeed();
-        double currentCalories = getWeeksAverageResults()[0];
+        double currentCalories = getWeeksResults()[0] / 7;
         return comparisonCalories - currentCalories;
     }
 

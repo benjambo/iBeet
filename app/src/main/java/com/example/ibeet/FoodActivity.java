@@ -121,7 +121,7 @@ public class FoodActivity extends AppCompatActivity {
         inputButton.setOnClickListener(myListener);
 
         updateViews();
-/*
+
         //size slider
         plateSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int barValue = 0;
@@ -141,7 +141,7 @@ public class FoodActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
        });
-*/
+
         //division slider
         rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Double>() {
             @Override
@@ -216,7 +216,7 @@ public class FoodActivity extends AppCompatActivity {
         caloriesDayText.setText(calToday);
 
         String calThisWeek = String.valueOf(
-                Math.floor(CaloriesCalculator.getInstance().getWeeksAverageResults()[0]));
+                Math.floor(CaloriesCalculator.getInstance().getWeeksResults()[0]));
         calThisWeek = getResources().getString(R.string.cal_week) + "\n" + calThisWeek;
         caloriesWeekText.setText(calThisWeek);
 
@@ -284,7 +284,7 @@ public class FoodActivity extends AppCompatActivity {
                 return getResources().getString(R.string.cal_week_comp_veryhigh) + fooBar;
             } else {
                 Log.d("", "viewStringBuild: viewStringBuild OR " +
-                        "CaloriesCalculator.--.getWeeksAverageResults BROKE");
+                        "CaloriesCalculator.--.getWeeksResults BROKE");
                 return "";
             }
 
