@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //ON CLICK LOGS OUT OF PROFILE
+        //ON CLICK LOGS OUT OF PROFILEs
         logout = findViewById(R.id.logoutBtn);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
