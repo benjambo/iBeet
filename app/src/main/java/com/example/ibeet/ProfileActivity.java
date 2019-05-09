@@ -143,6 +143,5 @@ LevelGenerator levelGenerator = new LevelGenerator();
     protected void onStop() {
         super.onStop();
         FileHandler.getInstance().writeUserFile(this);
-
     }
 }
