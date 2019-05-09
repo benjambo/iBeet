@@ -56,21 +56,21 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="506dp"
+        android:layout_marginTop="476dp"
         android:layout_marginEnd="46dp"
-        android:layout_marginBottom="118dp" />
+        android:layout_marginBottom="148dp" />
 
     <TextView
         android:id="@+id/averagespeed"
         android:layout_width="310dp"
         android:layout_height="35dp"
-        android:layout_alignTop="@+id/map"
+        android:layout_alignStart="@+id/totaldistance"
+        android:layout_alignTop="@+id/totaldistance"
         android:layout_alignBottom="@+id/map"
-        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="544dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="125dp"
         android:layout_marginEnd="46dp"
-        android:layout_marginBottom="80dp" />
+        android:layout_marginBottom="23dp" />
 
 </RelativeLayout>

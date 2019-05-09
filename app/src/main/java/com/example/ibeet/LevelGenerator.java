@@ -14,8 +14,8 @@ public class LevelGenerator {
         //CHECK IF CURRENT XP IS ENOUGH TO LEVEL UP, RESET XP NEEDED FOR NEW LEVEL, TAKE NEEDED XP FROM CURRENT XP AND RETURN NEW CURRENT XP
         while (currentXp > neededXp){
             currentLevel++;
-            getXpNeeded();
             resetCurrentXp();
+            getXpNeeded();
         }
     }
 
