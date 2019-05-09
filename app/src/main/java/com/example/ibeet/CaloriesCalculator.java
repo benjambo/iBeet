@@ -80,7 +80,7 @@ class CaloriesCalculator {
     private String userName;
 
     private SharedPreferences prefs;
-    private static final String PREFS_DATES = "com.example.ibeet.DATES";
+    private static final String PREFS_DATES = "Login";
 
     private int AGE;
     //private int ACTIVITY_MODE;

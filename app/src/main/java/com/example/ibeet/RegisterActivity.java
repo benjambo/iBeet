@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         name = findViewById(R.id.nameText);
         age = findViewById(R.id.ageText);
 
-        myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
+        myPrefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         registerButton = findViewById(R.id.btn_register);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
                 TimeCalculator.getInstance().updateDate(RegisterActivity.this);
 
                 //Saving userName, age and sex to shared preferences
-                myPrefs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
+                myPrefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.putString("nameKey", names);
                 editor.putString("userKey", usernames);

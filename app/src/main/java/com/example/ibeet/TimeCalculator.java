@@ -16,7 +16,7 @@ import java.util.TimeZone;
 class TimeCalculator {
     private static final TimeCalculator ourInstance = new TimeCalculator();
 
-    private static String PREFS_DATES = "com.example.ibeet.DATES";
+    private static String PREFS_DATES = "Login";
 
     static TimeCalculator getInstance() {
         return ourInstance;

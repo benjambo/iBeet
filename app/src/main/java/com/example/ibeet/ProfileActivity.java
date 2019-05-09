@@ -3,6 +3,7 @@ package com.example.ibeet;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ LevelGenerator levelGenerator = new LevelGenerator();
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
-        prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+        prefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         //GETTING USERS NAME AND AGE FROM SHARED PREFERENCES
         String userFromPrefs = prefs.getString("userKey", "Login");
@@ -68,7 +69,7 @@ LevelGenerator levelGenerator = new LevelGenerator();
         levelGenerator.calculateNewLevel();
         levelProgression.setMax(levelGenerator.neededXp);
         levelProgression.setProgress(levelGenerator.currentXp);
-        levelProgressionViewer.setText(levelGenerator.currentXp + "m/" + levelGenerator.neededXp + "m");
+        levelProgressionViewer.setText(levelGenerator.currentXp + " m / " + levelGenerator.neededXp + " m");
 
         //USERS TRACKER RECORDS AND LEVEL DISPLAYS HERE:
         float currSesDist = prefs.getFloat("sessionDistanceTravelled",0);
@@ -81,16 +82,26 @@ LevelGenerator levelGenerator = new LevelGenerator();
         sessionSpeed.setText(String.valueOf(currSesSpeed));
         allTimeDistance.setText(String.valueOf(allDistance));
         lastSessionSpeed.setText(String.valueOf(lastSesSpeed));
-        levelViewer.setText(String.valueOf(userLevel));
+        levelViewer.setText(String.format("Level: " + (userLevel)));
 
         //ON CLICK LOGS OUT OF PROFILE
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+                prefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("firstStart", true);
                 editor.commit();
+
+                /*prefs = getSharedPreferences("allTimeDistanceTravelled", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs.edit();
+                editor2.clear();
+                editor2.commit();
+
+                prefs = getSharedPreferences("lastSessionAverageSpeed", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor3 = prefs.edit();
+                editor3.clear();
+                editor3.commit();*/
 
                 Intent loginActivity = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(loginActivity);

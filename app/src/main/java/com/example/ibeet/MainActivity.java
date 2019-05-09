@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+                prefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("firstStart", false);
                 editor.apply();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 String cals = (String)tv.getText();
                 int calsInt = Integer.parseInt(cals);
 
-                SharedPreferences prefs = MainActivity.this.getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
+                SharedPreferences prefs = MainActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                 double[] daa = new double[]{(double)calsInt, 0, 0, 0};
 
                 FileHandler.getInstance().readUserFile(MainActivity.this).getNutCollection(

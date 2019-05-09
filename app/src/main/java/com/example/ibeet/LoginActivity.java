@@ -37,7 +37,7 @@ private Toast backToast;
         pswd = findViewById(R.id.password);
         login = findViewById(R.id.btn_login);
 
-        prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+        prefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
 
         if (!firstStart) {
@@ -105,7 +105,7 @@ private Toast backToast;
     protected void onPause() {
         super.onPause();
 
-        prefs = getSharedPreferences("com.example.ibeet.DATES", MODE_PRIVATE);
+        prefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("firstStart", false);
         editor.apply();

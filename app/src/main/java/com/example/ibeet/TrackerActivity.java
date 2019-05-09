@@ -54,7 +54,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        myPreffs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
+        myPreffs = getSharedPreferences("Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = myPreffs.edit();
         float oldAvSpeed = myPreffs.getFloat("thisSessionAverageSpeed", 0);
         editor.putFloat("lastSessionAverageSpeed", oldAvSpeed);
@@ -126,7 +126,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onPause() {
         super.onPause();
 
-        myPreffs = getSharedPreferences("com.example.ibeet.DATES", Context.MODE_PRIVATE);
+        myPreffs = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = myPreffs.edit();
         float old = myPreffs.getFloat("allTimeDistanceTravelled", 0);
